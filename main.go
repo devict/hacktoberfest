@@ -12,6 +12,21 @@ import (
 	"github.com/unrolled/render"
 )
 
+// Any project under one of these organizations counts
+var orgs = map[string]bool{
+	"devICT":         true,
+	"MakeICT":        true,
+	"openwichita":    true,
+	"startupwichita": true,
+	"wichitalks":     true,
+	"Ennovar":        true,
+}
+
+// These specific projects also count
+var projects = map[string]bool{
+	"imacrayon/foodtrucksnear.me": true,
+}
+
 var v = render.New(render.Options{
 	Layout:        "layout",
 	IsDevelopment: dev(),
@@ -26,7 +41,7 @@ func main() {
 	r.Get("/auth/{provider}", gothic.BeginAuthHandler)
 
 	r.Get("/profile", profile)
-	r.Get("/api/check", check) // TODO change to post
+	r.Get("/api/prs", prs)
 
 	r.Get("/", home)
 

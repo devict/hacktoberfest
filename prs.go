@@ -5,39 +5,22 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"regexp"
 
 	"github.com/markbates/goth"
 	"github.com/pkg/errors"
 )
 
+// PR is a pull request against any repo
+// GitHub. The Valid field is set based on the
+// Repo's presence in the orgs or projects
+// maps.
 type PR struct {
 	URL   string
 	Repo  Repo
 	Valid bool
 }
 
-type Repo struct {
-	Owner string
-	Name  string
-}
-
-// Any project under one of these organizations counts
-var orgs = map[string]bool{
-	"devICT":         true,
-	"MakeICT":        true,
-	"openwichita":    true,
-	"startupwichita": true,
-	"wichitalks":     true,
-	"Ennovar":        true,
-}
-
-// These specific projects also count
-var projects = map[string]bool{
-	"imacrayon/foodtrucksnear.me": true,
-}
-
-func check(w http.ResponseWriter, r *http.Request) {
+func prs(w http.ResponseWriter, r *http.Request) {
 	u, ok := findUser(r)
 	if !ok {
 		http.Error(w, "you are not logged in", http.StatusUnauthorized)
@@ -110,18 +93,4 @@ func fetchPRs(u goth.User) ([]PR, error) {
 	}
 
 	return prs, nil
-}
-
-var reRepo = regexp.MustCompile("https://api.github.com/repos/([^/]+)/([^/]+)")
-
-func repoFromURL(url string) (Repo, error) {
-	if !reRepo.MatchString(url) {
-		return Repo{}, fmt.Errorf("url %q did not match regexp", url)
-	}
-
-	matches := reRepo.FindStringSubmatch(url)
-	return Repo{
-		Name:  matches[2],
-		Owner: matches[1],
-	}, nil
 }
