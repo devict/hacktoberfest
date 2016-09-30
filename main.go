@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/pat"
 	"github.com/markbates/goth/gothic"
@@ -51,7 +52,16 @@ func main() {
 	}
 
 	fmt.Println("Listing on", addr)
-	log.Fatal(http.ListenAndServe(addr, r))
+	log.Fatal(http.ListenAndServe(addr, logger(r)))
+}
+
+func logger(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		log.Printf("Serving %s", r.URL.String())
+		h.ServeHTTP(w, r)
+		log.Printf("Done serving %s [%v]", r.URL.String(), time.Since(start))
+	})
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
