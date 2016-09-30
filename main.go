@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gorilla/pat"
 	"github.com/markbates/goth/gothic"
@@ -12,7 +13,8 @@ import (
 )
 
 var v = render.New(render.Options{
-	Layout: "layout",
+	Layout:        "layout",
+	IsDevelopment: dev(),
 })
 
 func main() {
@@ -38,5 +40,21 @@ func main() {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	v.HTML(w, http.StatusOK, "home", nil)
+	data := struct {
+		Orgs     map[string]bool
+		Projects map[string]bool
+	}{
+		Orgs:     orgs,
+		Projects: projects,
+	}
+	v.HTML(w, http.StatusOK, "home", data)
+}
+
+func dev() bool {
+	d, err := strconv.ParseBool(os.Getenv("DEV"))
+	if err != nil {
+		return false
+	}
+
+	return d
 }

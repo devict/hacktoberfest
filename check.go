@@ -22,11 +22,6 @@ type Repo struct {
 	Name  string
 }
 
-type CheckResult struct {
-	Valid   []Repo
-	Invalid []Repo
-}
-
 // Any project under one of these organizations counts
 var orgs = map[string]bool{
 	"devICT":         true,
