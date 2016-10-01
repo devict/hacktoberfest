@@ -1,0 +1,24 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.5.4
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: hacktoberfest
+  web:
+    build: .
+    env_file: secret.env
+    environment:
+      GITHUB_CALLBACK: http://localhost:8080
+      PORT: 8080
+      SESSION_SECRET: banana
+      DEV: "true"
+      DATABASE_URL: postgres://dev:secret@db/hacktoberfest
+    volumes:
+      - "./templates:/go/src/github.com/devict/hacktoberfest/templates"
+      - "./public:/go/src/github.com/devict/hacktoberfest/public"
+    ports:
+      - "8080:8080"
+    links:
+      - db

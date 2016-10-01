@@ -1,0 +1,7 @@
+.git
+.gitignore
+README.md
+docker-compose.yml
+example.env
+hacktoberfest
+secret.env
