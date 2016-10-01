@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,7 +10,9 @@ import (
 	"time"
 
 	"github.com/gorilla/pat"
+	_ "github.com/lib/pq"
 	"github.com/markbates/goth/gothic"
+	"github.com/pkg/errors"
 	"github.com/unrolled/render"
 )
 
@@ -33,8 +36,15 @@ var v = render.New(render.Options{
 	IsDevelopment: dev(),
 })
 
+var db *sql.DB
+
 func main() {
 	r := pat.New()
+
+	if err := setupDB(); err != nil {
+		log.Println("could not set up db", err)
+		os.Exit(1)
+	}
 
 	// Register auth handlers. pat requires all routes be registered most
 	// specific first so the shorter routes have to be added last
@@ -44,7 +54,10 @@ func main() {
 	r.Get("/profile", profile)
 	r.Get("/api/prs", prs)
 
+	// Serve static files
 	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
+
+	// TODO favicon?
 
 	r.Get("/", home)
 
@@ -84,4 +97,41 @@ func dev() bool {
 	}
 
 	return d
+}
+
+func setupDB() error {
+	var err error
+	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	if err != nil {
+		return errors.Wrap(err, "could not open db")
+	}
+
+	// See if the db is awake. Give it a while to come up with a simple backoff
+	for attempts := 1; attempts <= 20; attempts++ {
+		if err = db.Ping(); err == nil {
+			break
+		}
+		log.Printf("Waiting for db to come up, attempt %d of 20: %v", attempts, err)
+		time.Sleep(time.Duration(attempts) * time.Second)
+	}
+	if err != nil {
+		return errors.Wrap(err, "db never came up")
+	}
+
+	q := `CREATE TABLE IF NOT EXISTS users (
+		id integer,
+		username varchar(255),
+		name varchar(255),
+		email varchar(255),
+		avatar varchar(255),
+		created_at TIMESTAMP WITH TIME ZONE,
+		updated_at TIMESTAMP WITH TIME ZONE,
+		PRIMARY KEY(id)
+	)`
+	_, err = db.Exec(q)
+	if err != nil {
+		return errors.Wrap(err, "could not make user table")
+	}
+
+	return nil
 }

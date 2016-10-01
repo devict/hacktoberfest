@@ -33,6 +33,18 @@
 			"revisionTime": "2016-04-10T16:15:33Z"
 		},
 		{
+			"checksumSHA1": "dNYxHiBLalTqluak2/Z8c3RsSEM=",
+			"path": "github.com/lib/pq",
+			"revision": "50761b0867bd1d9d069276790bcd4a3bccf2324a",
+			"revisionTime": "2016-08-31T22:25:20Z"
+		},
+		{
+			"checksumSHA1": "xppHi82MLqVx1eyQmbhTesAEjx8=",
+			"path": "github.com/lib/pq/oid",
+			"revision": "50761b0867bd1d9d069276790bcd4a3bccf2324a",
+			"revisionTime": "2016-08-31T22:25:20Z"
+		},
+		{
 			"checksumSHA1": "XvlugfJu1R7Y/ZvZN60ILzFCQmc=",
 			"path": "github.com/markbates/goth",
 			"revision": "f3bead3dbb6ec71cf27ecb07bec804d4b97ac6f5",

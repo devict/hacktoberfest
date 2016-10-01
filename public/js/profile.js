@@ -22,7 +22,7 @@ $(function() {
         var message;
         if (data.length === 0) {
           // No PRs
-          message = "You have not / did not opened any Pull Requests on public GitHub projects during October.";
+          message = "You have not opened any Pull Requests on public GitHub projects during October 2016.";
         } else if (validCount === 0) {
           // Some PRs but none count
           message = "You have " + data.length + " Pull Request(s) but none of them are against approved repos.";

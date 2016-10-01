@@ -14,7 +14,7 @@ services:
       PORT: 8080
       SESSION_SECRET: banana
       DEV: "true"
-      DATABASE_URL: postgres://dev:secret@db/hacktoberfest
+      DATABASE_URL: postgres://dev:secret@db/hacktoberfest?sslmode=disable
     volumes:
       - "./templates:/go/src/github.com/devict/hacktoberfest/templates"
       - "./public:/go/src/github.com/devict/hacktoberfest/public"
