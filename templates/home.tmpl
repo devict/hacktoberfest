@@ -1,58 +1,64 @@
-<h3>What's this?</h3>
-<p>
+<section>
+  <h3>What's this?</h3>
+  <p class="lead">
+    We are asking people to open 4 pull requests to <strong>Wichita
+    based</strong> projects on GitHub during the month of October.
+  </p>
+  <p>
     This is a blatant attempt to piggyback off the popularity of the global
     <a href="https://hacktoberfest.digitalocean.com">Hacktoberfest</a> event
     from Digital Ocean and GitHub.
-</p>
-<p>
-    We are asking people to open 4 pull requests to <strong>Wichita
-    based</strong> open source projects on GitHub during the month of
-    October.
-</p>
+  </p>
+</section>
 
-<h3>What do I get out of it?</h3>
-<p>
+<section>
+  <h3>What do I get out of it?</h3>
+  <p>
     Some sweet stuff! A shirt, probably. Maybe some stickers too? We're still
     working that out.
-</p>
+  </p>
+</section>
 
-<h3>What do you get out of it?</h3>
-<p>
-    A livelier developer community in Wichita!
-</p>
+<section>
+  <h3>What do you get out of it?</h3>
+  <p>A livelier developer community in Wichita!</p>
+</section>
 
-<h3>What projects qualify?</h3>
-<p>
-    Any project from Wichita devs or organizations qualifies but it
-    needs to be listed here.
-</p>
-<p>
+<section>
+  <h3>What projects qualify?</h3>
+  <p>
+    Any project from Wichita devs or organizations qualifies but it needs to be
+    listed here.
+  </p>
+  <p>
     We will count PRs opened against any projects under any of these
     organizations:
     <ul>
-        {{ range $org, $i := .Orgs }}
-            <li><a href="https://github.com/{{ $org }}">{{ $org }}</a></li>
-        {{ end }}
+      {{ range $org, $i := .Orgs }}
+        <li><a href="https://github.com/{{ $org }}">{{ $org }}</a></li>
+      {{ end }}
     </ul>
-    Note that <a href="https://github.com/devict/hacktoberfest">the
-        repo for this site</a> qualifies so maybe make this page look
-    better? <em>(How meta!)</em>
-</p>
-<p>
+    Note that <a href="https://github.com/devict/hacktoberfest">the repo for
+    this site</a> qualifies so maybe make this page look better? <em>(How meta!)</em>
+  </p>
+  <p>
     We will also count PRs opened against these individual projects.
     <ul>
-        {{ range $p, $i := .Projects }}
-            <li><a href="https://github.com/{{ $p }}">{{ $p }}</a></li>
-        {{ end }}
+      {{ range $p, $i := .Projects }}
+        <li><a href="https://github.com/{{ $p }}">{{ $p }}</a></li>
+      {{ end }}
     </ul>
-</p>
-<p>
-    Would you like your organization or project to show up on these
-    lists? Just let us know! <a href=">https://github.com/devict/hacktoberfest/issues/new">File an issue</a>
-    against this site's repo or maybe make a pull request?
-</p>
+  </p>
+  <p>
+    Would you like your organization or project to show up on these lists? Just
+    let us know! <a href=">https://github.com/devict/hacktoberfest/issues/new">File
+    an issue</a> against this site's repo or maybe make a pull request?
+  </p>
+</section>
 
-<h3>Are you ready?</h3>
-<p>
-    Let's get started! <a class="btn btn-success" href="/auth/github">Sign Up with GitHub!</a>
-</p>
+<section>
+  <h3>Okay let's do this!</h3>
+  <p>
+    <a class="btn btn-primary" href="/auth/github">Sign Up with GitHub!</a>
+  </p>
+</section>

@@ -44,6 +44,8 @@ func main() {
 	r.Get("/profile", profile)
 	r.Get("/api/prs", prs)
 
+	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
+
 	r.Get("/", home)
 
 	addr := ":8080"
