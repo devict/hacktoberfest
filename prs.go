@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/markbates/goth"
 	"github.com/pkg/errors"
@@ -15,6 +16,8 @@ import (
 // Repo's presence in the orgs or projects
 // maps.
 type PR struct {
+	Title string
+	Date  time.Time
 	URL   string
 	Repo  Repo
 	Valid bool
@@ -51,13 +54,14 @@ func fetchPRs(u goth.User) ([]PR, error) {
 	}
 
 	q := fmt.Sprintf(
-		"author:%s type:pr created:2016-08-30T00:00:00-12:00..2016-10-31T23:59:59-12:00", // TODO fix dates
+		"author:%s type:pr created:2016-10-01T00:00:00-6:00..2016-10-31T23:59:59-6:00",
 		u.NickName,
 	)
 	vals := req.URL.Query()
 	vals.Add("q", q)
 	req.URL.RawQuery = vals.Encode()
 
+	// Use their access token so it counts against their rate limit
 	req.Header.Add("Authorization", "token "+u.AccessToken)
 
 	resp, err := http.DefaultClient.Do(req)
@@ -72,8 +76,10 @@ func fetchPRs(u goth.User) ([]PR, error) {
 
 	var data struct {
 		Items []struct {
-			URL     string `json:"url"`
-			RepoURL string `json:"repository_url"`
+			Title     string    `json:"title"`
+			CreatedAt time.Time `json:"created_at"`
+			URL       string    `json:"url"`
+			RepoURL   string    `json:"repository_url"`
 		} `json:"items"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
@@ -82,7 +88,11 @@ func fetchPRs(u goth.User) ([]PR, error) {
 
 	var prs []PR
 	for _, item := range data.Items {
-		pr := PR{URL: item.URL}
+		pr := PR{
+			Title: item.Title,
+			Date:  item.CreatedAt,
+			URL:   item.URL,
+		}
 
 		pr.Repo, err = repoFromURL(item.RepoURL)
 		if err != nil {

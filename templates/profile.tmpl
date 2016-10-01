@@ -1,10 +1,63 @@
-<p>Name: {{.Name}}</p>
-<p>Email: {{.Email}}</p>
-<p>NickName: {{.NickName}}</p>
-<p>Location: {{.Location}}</p>
-<p>AvatarURL: {{.AvatarURL}} <img src="{{.AvatarURL}}"></p>
-<p>Description: {{.Description}}</p>
-<p>UserID: {{.UserID}}</p>
-<p>AccessToken: {{.AccessToken}}</p>
-<p>ExpiresAt: {{.ExpiresAt}}</p>
-<p>RefreshToken: {{.RefreshToken}}</p>
+<section class="clearfix">
+  <p>
+    Well howdy, {{ .NickName }}. Thanks for signing up! We've marked down
+    this information for you:
+  </p>
+  <div class="col-md-offset-3 col-md-5 well">
+    <div class="col-md-6">
+      <img src="{{.AvatarURL}}" class="img-responsive img-circle img-thumbnail" />
+    </div>
+    <div class="col-md-6">
+      <dl>
+        <dt>Name</dt>
+        <dd>{{.Name}}</dd>
+        <dt>Email</dt>
+        <dd>{{.Email}}</dd>
+        <dt>Username</dt>
+        <dd>{{.NickName}}</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h3>What's next?</h3>
+  <p>
+    Start contributing to open source in Wichita by opening pull requests
+    against one of the approved projects or organizations. Come back here to
+    check your status throughout the month.
+  </p>
+  <p>
+    <button id="check" class="btn btn-primary">Check my status!</button>
+  </p>
+  <div id="results"></div>
+</section>
+
+{{/* The contents of these two hidden divs are cloned by JavaScript then
+certain bits are filled in. The first is for valid PRs and the second is for
+invalid */}}
+<div id="pr-template-valid" class="hidden">
+  <div class="alert alert-success">
+    <p>
+      <i class="fa fa-check-circle"></i> <span class="title"></span>
+    </p>
+    <p>Opened <span class="date"></span> against <span class="repo"></span></p>
+  </div>
+</div>
+
+<div id="pr-template-invalid" class="hidden">
+  <div class="alert alert-danger">
+    <p>
+      <i class="fa fa-exclamation-circle"></i> <span class="title"></span>
+    </p>
+    <p>Opened <span class="date"></span> against <span class="repo"></span></p>
+    <p>This PR does not count for the Wichita Hacktoberfest because it is not
+    against an approved project or organization. If you feel it should be then
+    please <a href=">https://github.com/devict/hacktoberfest/issues/new">file
+      an issue</a>.</p>
+  </div>
+</div>
+
+{{ define "js" }}
+  <script src="/public/js/profile.js"></script>
+{{ end }}
