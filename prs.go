@@ -11,10 +11,8 @@ import (
 	"github.com/pkg/errors"
 )
 
-// PR is a pull request against any repo
-// GitHub. The Valid field is set based on the
-// Repo's presence in the orgs or projects
-// maps.
+// PR is a pull request against any repo GitHub. The Valid field is set based
+// on the Repo's presence in the orgs or projects maps.
 type PR struct {
 	Title string
 	Date  time.Time
@@ -86,7 +84,7 @@ func fetchPRs(u goth.User) ([]PR, error) {
 		return nil, errors.Wrap(err, "could not decode json")
 	}
 
-	var prs []PR
+	prs := []PR{}
 	for _, item := range data.Items {
 		pr := PR{
 			Title: item.Title,

@@ -5,8 +5,7 @@ import (
 	"regexp"
 )
 
-// Repo is a repository on Github. Owner can be
-// either an organization or user.
+// Repo is a repository on Github. Owner can be either an organization or user.
 type Repo struct {
 	Owner string
 	Name  string
