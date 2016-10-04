@@ -18,7 +18,7 @@ import (
 
 // Any project under one of these organizations counts
 var orgs = map[string]bool{
-	"devICT":         true,
+	"devict":         true,
 	"MakeICT":        true,
 	"openwichita":    true,
 	"startupwichita": true,
