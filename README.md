@@ -6,6 +6,17 @@ GitHub event](https://hacktoberfest.digitalocean.com/) by the same name.
 
 # Development
 
+You need to create an application on GitHub
+[here](https://github.com/settings/applications/new) then put the ID
+and secret in a file `secret.env` like this
+
+```
+GITHUB_KEY=123abc123abc
+GITHUB_SECRET=123abc123abc123abc123abc
+```
+
+# Running
+
 You can run the app locally using [Docker](https://docker.com). There is
 a docker-compose file that will run the app and database.
 
