@@ -22,7 +22,7 @@ var orgs = map[string]bool{
 	"MakeICT":        true,
 	"openwichita":    true,
 	"startupwichita": true,
-	"wichitalks":     true,
+	"Wichitalks":     true,
 	"Ennovar":        true,
 }
 
