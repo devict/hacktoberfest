@@ -97,6 +97,11 @@ func fetchPRs(u goth.User) ([]PR, error) {
 			return nil, errors.Wrapf(err, "could not identify repo from %s", item.RepoURL)
 		}
 
+		// ¯\_(ツ)_/¯
+		if u.NickName == `kentonh` && pr.Repo.Owner == u.NickName {
+			continue
+		}
+
 		prs = append(prs, pr)
 	}
 
