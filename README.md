@@ -11,8 +11,10 @@ Make Wichita a better place through code. Hop on over to [Our Hacktoberfest app]
 # Development
 
 You need to create an application on GitHub
-[here](https://github.com/settings/applications/new) then put the ID
-and secret in a file `secret.env` like this
+[here](https://github.com/settings/applications/new). Set the "Homepage URL" to
+`http://localhost:8080` and "Authorization callback URL" to
+`http://localhost:8080/auth/github`, then put the ID
+and secret in a file `secret.env` like this:
 
 ```
 GITHUB_KEY=123abc123abc
