@@ -39,12 +39,26 @@ var v = render.New(render.Options{
 var db *sql.DB
 
 func main() {
-	r := pat.New()
-
 	if err := setupDB(); err != nil {
 		log.Println("could not set up db", err)
 		os.Exit(1)
 	}
+
+	run := "web"
+	if len(os.Args) > 1 {
+		run = os.Args[1]
+	}
+
+	if run == "check" {
+		if err := check(); err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
+
+	// default: web
+
+	r := pat.New()
 
 	// Register auth handlers. pat requires all routes be registered most
 	// specific first so the shorter routes have to be added last

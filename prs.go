@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/markbates/goth"
 	"github.com/pkg/errors"
 )
 
@@ -28,15 +27,11 @@ func prs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	prs, err := fetchPRs(u)
+	prs, err := fetchPRs(u.NickName, u.AccessToken)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
-	}
-
-	for i, pr := range prs {
-		prs[i].Valid = orgs[pr.Repo.Owner] || projects[pr.Repo.Owner+"/"+pr.Repo.Name]
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -45,7 +40,7 @@ func prs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func fetchPRs(u goth.User) ([]PR, error) {
+func fetchPRs(username, token string) ([]PR, error) {
 	req, err := http.NewRequest("GET", "https://api.github.com/search/issues", nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not build request")
@@ -53,14 +48,16 @@ func fetchPRs(u goth.User) ([]PR, error) {
 
 	q := fmt.Sprintf(
 		"author:%s type:pr created:2016-10-01T00:00:00-12:00..2016-10-31T23:59:59-12:00",
-		u.NickName,
+		username,
 	)
 	vals := req.URL.Query()
 	vals.Add("q", q)
 	req.URL.RawQuery = vals.Encode()
 
 	// Use their access token so it counts against their rate limit
-	req.Header.Add("Authorization", "token "+u.AccessToken)
+	if token != "" {
+		req.Header.Add("Authorization", "token "+token)
+	}
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -98,11 +95,15 @@ func fetchPRs(u goth.User) ([]PR, error) {
 		}
 
 		// ¯\_(ツ)_/¯
-		if u.NickName == `kentonh` && pr.Repo.Owner == u.NickName {
+		if username == `kentonh` && pr.Repo.Owner == username {
 			continue
 		}
 
 		prs = append(prs, pr)
+	}
+
+	for i, pr := range prs {
+		prs[i].Valid = orgs[pr.Repo.Owner] || projects[pr.Repo.Owner+"/"+pr.Repo.Name]
 	}
 
 	return prs, nil
