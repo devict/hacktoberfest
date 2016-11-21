@@ -46,12 +46,15 @@ func check() error {
 				invalid++
 			}
 		}
+		var result string
 		if valid >= 4 {
 			succesful++
+			result = "✔"
 		} else {
 			unsuccessful++
+			result = "✘"
 		}
-		fmt.Printf("%02d %20s %8d %8d\n", i, u, valid, invalid)
+		fmt.Printf("%02d %20s %8d %8d %s\n", i, u, valid, invalid, result)
 	}
 	fmt.Printf("Succesful: %d\nUnsuccessful: %d\n", succesful, unsuccessful)
 
