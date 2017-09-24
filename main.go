@@ -28,7 +28,7 @@ var orgs = map[string]bool{
 
 // These specific projects also count
 var projects = map[string]bool{
-	"imacrayon/foodtrucksnear.me": true,
+	"imacrayon/eventsinwichita": true,
 }
 
 var v = render.New(render.Options{
@@ -80,7 +80,7 @@ func main() {
 		addr = ":" + p
 	}
 
-	fmt.Println("Listing on", addr)
+	fmt.Println("Server running on", addr)
 	log.Fatal(http.ListenAndServe(addr, logger(r)))
 }
 

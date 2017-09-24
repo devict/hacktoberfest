@@ -47,7 +47,7 @@ func fetchPRs(username, token string) ([]PR, error) {
 	}
 
 	q := fmt.Sprintf(
-		"author:%s type:pr created:2016-10-01T00:00:00-12:00..2016-10-31T23:59:59-12:00",
+		"author:%s type:pr created:2017-10-01T00:00:00-12:00..2017-10-31T23:59:59-12:00",
 		username,
 	)
 	vals := req.URL.Query()

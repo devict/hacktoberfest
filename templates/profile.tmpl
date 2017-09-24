@@ -1,42 +1,45 @@
-<section class="clearfix">
-  <p>
-    Well howdy, {{ .NickName }}. Thanks for signing up! We've marked down
-    this information for you:
-  </p>
-  <div class="col-md-offset-3 col-md-5 well">
-    <div class="col-md-6">
-      <img src="{{.AvatarURL}}" class="img-responsive img-circle img-thumbnail" />
-    </div>
-    <div class="col-md-6">
-      <dl>
-        <dt>Name</dt>
-        <dd>{{.Name}}</dd>
-        <dt>Email</dt>
-        <dd>{{.Email}}</dd>
-        <dt>Username</dt>
-        <dd>{{.NickName}}</dd>
-      </dl>
-    </div>
-  </div>
-</section>
+{{ define "js-profile" }}
+  <script src="/public/js/profile.js"></script>
+{{ end }}
 
-<section>
-  <h3>What's next?</h3>
-  <p>
-    The event has ended for this year. We will be working to contact those who
-    signed up to distribute prizes. If you were signed up before November you
-    can check your status here.
-  </p>
-  <p>
+<div class="container">
+  <section class="clearfix">
+    <p class="text-center">Well howdy, {{ .NickName }}. Thanks for signing up! We've marked down this information for you:</p>
+
+    <div class="row justify-content-center">
+      <div class="col-4 text-right">
+        <img src="{{.AvatarURL}}" class="img-responsive img-circle img-thumbnail" width="200px" />
+      </div>
+      <div class="col-4">
+        <dl>
+          <dt>Name</dt>
+          <dd>{{.Name}}</dd>
+          <dt>Email</dt>
+          <dd>{{.Email}}</dd>
+          <dt>Username</dt>
+          <dd>{{.NickName}}</dd>
+        </dl>
+      </div>
+    </div>
+
+    <h3>What's next?</h3>
+    <p>
+    Start contributing to open source in Wichita by opening pull requests
+    against one of the approved projects or organizations. Come back here to
+    check your status throughout the month. When the event is over you will be
+    contacted to claim your prize!
+    </p>
+    <p>
     <button id="check" class="btn btn-primary">Check my status!</button>
-  </p>
-  <div id="results"></div>
-</section>
+    </p>
+    <div id="results"></div>
+  </section>
+</div>
 
-{{/* The contents of these two hidden divs are cloned by JavaScript then
+{{/* The contents of these two invisible divs are cloned by JavaScript then
 certain bits are filled in. The first is for valid PRs and the second is for
 invalid */}}
-<div id="pr-template-valid" class="hidden">
+<div id="pr-template-valid" class="invisible">
   <div class="alert alert-success">
     <p>
       <i class="fa fa-check-circle"></i> <span class="title"></span>
@@ -45,7 +48,7 @@ invalid */}}
   </div>
 </div>
 
-<div id="pr-template-invalid" class="hidden">
+<div id="pr-template-invalid" class="invisible">
   <div class="alert alert-danger">
     <p>
       <i class="fa fa-exclamation-circle"></i> <span class="title"></span>
@@ -57,7 +60,3 @@ invalid */}}
     issue</a>.</p>
   </div>
 </div>
-
-{{ define "js" }}
-  <script src="/public/js/profile.js"></script>
-{{ end }}
