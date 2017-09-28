@@ -29,6 +29,7 @@ var orgs = map[string]bool{
 // These specific projects also count
 var projects = map[string]bool{
 	"imacrayon/eventsinwichita": true,
+	"br0xen/boltbrowser":        true,
 }
 
 var v = render.New(render.Options{
