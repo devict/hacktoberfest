@@ -4,20 +4,33 @@
 
 <div class="container">
   <section class="clearfix">
-    <p class="text-center">Well howdy, {{ .NickName }}. Thanks for signing up! We've marked down this information for you:</p>
-
+    <p class="text-center">
+    {{ if .New }}
+      Well howdy, {{ .User.NickName }}. Thanks for signing up!
+    {{ else }}
+      Welcome back, {{ .User.NickName }}!
+    {{ end }}
+    </p>
+    <p class="text-center">
+      We've marked down this information for you:
+    </p>
     <div class="row justify-content-center">
       <div class="col-4 text-right">
-        <img src="{{.AvatarURL}}" class="img-responsive img-circle img-thumbnail" width="200px" />
+        <img src="{{.User.AvatarURL}}" class="img-responsive img-circle img-thumbnail" width="200px" />
       </div>
       <div class="col-4">
         <dl>
           <dt>Name</dt>
-          <dd>{{.Name}}</dd>
-          <dt>Email</dt>
-          <dd>{{.Email}}</dd>
+          <dd>{{.User.Name}}</dd>
           <dt>Username</dt>
-          <dd>{{.NickName}}</dd>
+          <dd>{{.User.NickName}}</dd>
+          <dt>Email</dt>
+          <dd>{{.User.Email}}</dd>
+          <dt class="share invisible">Share Info With Sponsors</dt>
+          <dd class="share invisible">
+          <input type="checkbox" id="share_info" />
+          <span id="share_info_state"></span>
+          </dd>
         </dl>
       </div>
     </div>
@@ -35,6 +48,39 @@
     <div id="results"></div>
   </section>
 </div>
+
+{{ if .New }}
+<div class="modal fade" id="sponsorShareModal" tabindex="-1" role="dialog" aria-labelledby="sponsorSharePrompt" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sponsorSharePrompt">Sponsor Information Sharing</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+        <strong>Hey</strong>, before we get you signed up I need to ask you
+        something really quickly.
+        </p>
+        <p>
+        Our sponsors make this whole thing possible. Several of them are
+        actively recruiting and we would like to give them your information. By
+        default your information is private but if you don't mind we would like
+        your permission to pass along your name, github username, and email.
+        </p>
+        <p>
+        Keep in mind that our list of sponsors may change throughout the month.
+        Also much of the information we'd be providing is already public anyway
+        since this is open source 🙂
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="dismissModal">Keep Private</button>
+        <button type="button" class="btn btn-primary" id="allowSharing">Allow Sharing</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}
 
 {{/* The contents of these two invisible divs are cloned by JavaScript then
 certain bits are filled in. The first is for valid PRs and the second is for

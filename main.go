@@ -65,8 +65,11 @@ func main() {
 	r.Get("/auth/{provider}/callback", authCallback)
 	r.Get("/auth/{provider}", gothic.BeginAuthHandler)
 
-	r.Get("/profile", profile)
 	r.Get("/api/prs", prs)
+	r.Get("/api/share", getShare)
+	r.Put("/api/share", updateShare)
+
+	r.Get("/profile", profile)
 
 	// Serve static files
 	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
@@ -138,6 +141,7 @@ func setupDB() error {
 		name varchar(255),
 		email varchar(255),
 		avatar varchar(255),
+		share_info boolean default false,
 		created_at TIMESTAMP WITH TIME ZONE,
 		updated_at TIMESTAMP WITH TIME ZONE,
 		PRIMARY KEY(id)
