@@ -21,7 +21,7 @@ type PR struct {
 }
 
 func prs(w http.ResponseWriter, r *http.Request) {
-	u, ok := findUser(r)
+	u, _, ok := findUser(r)
 	if !ok {
 		http.Error(w, "you are not logged in", http.StatusUnauthorized)
 		return

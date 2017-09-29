@@ -25,7 +25,12 @@ func init() {
 	gothic.Store = sess
 
 	goth.UseProviders(
-		github.New(os.Getenv("GITHUB_KEY"), os.Getenv("GITHUB_SECRET"), os.Getenv("GITHUB_CALLBACK")+"/auth/github/callback"),
+		github.New(
+			os.Getenv("GITHUB_KEY"),
+			os.Getenv("GITHUB_SECRET"),
+			os.Getenv("GITHUB_CALLBACK")+"/auth/github/callback",
+			"user:email",
+		),
 	)
 }
 
@@ -38,24 +43,25 @@ func authCallback(w http.ResponseWriter, r *http.Request) {
 
 	s, _ := sess.Get(r, "session")
 	s.Values["user"] = user
-	if err := s.Save(r, w); err != nil {
-		log.Println(err)
-	}
-
-	if err := saveUser(user); err != nil {
+	s.Values["new"], err = saveUser(user)
+	if err != nil {
 		log.Println(err)
 		http.Error(w, "database error", http.StatusInternalServerError)
 		return
 	}
 
+	if err := s.Save(r, w); err != nil {
+		log.Println(err)
+	}
+
 	http.Redirect(w, r, "/profile", http.StatusTemporaryRedirect)
 }
 
-func saveUser(u goth.User) error {
+func saveUser(u goth.User) (bool, error) {
 	var found int
 	err := db.QueryRow("SELECT id FROM users WHERE id = $1", u.UserID).Scan(&found)
 	if err != nil && err != sql.ErrNoRows {
-		return errors.Wrap(err, "could not check for existing user")
+		return false, errors.Wrap(err, "could not check for existing user")
 	}
 
 	if err == sql.ErrNoRows {
@@ -70,9 +76,9 @@ func saveUser(u goth.User) error {
 			time.Now(),
 		)
 		if err != nil {
-			return errors.Wrap(err, "could not insert user")
+			return false, errors.Wrap(err, "could not insert user")
 		}
-		return nil
+		return true, nil
 	}
 
 	_, err = db.Exec(
@@ -85,23 +91,28 @@ func saveUser(u goth.User) error {
 		u.UserID,
 	)
 	if err != nil {
-		return errors.Wrap(err, "could not update user")
+		return false, errors.Wrap(err, "could not update user")
 	}
 
-	return nil
+	return false, nil
 }
 
-func findUser(r *http.Request) (goth.User, bool) {
+func findUser(r *http.Request) (goth.User, bool, bool) {
 	s, err := sess.Get(r, "session")
 	if err != nil {
-		return goth.User{}, false
+		return goth.User{}, false, false
 	}
 
 	val, ok := s.Values["user"]
 	if !ok {
-		return goth.User{}, false
+		return goth.User{}, false, false
 	}
-	u, ok := val.(goth.User)
 
-	return u, ok
+	n, ok := s.Values["new"].(bool)
+	if !ok {
+		n = false
+	}
+
+	u, ok := val.(goth.User)
+	return u, n, ok
 }
