@@ -1,6 +1,7 @@
 // On document load we wire up all of the events
 $(function() {
   $('#check').click(checkPRs);
+  checkIssues();
   $('#share_info').change(saveShareInfo);
 
   if ($('#sponsorShareModal').length) {
@@ -11,6 +12,32 @@ $(function() {
     getShareInfo();
   }
 });
+
+function checkIssues() {
+  var results = $('#issues_results');
+
+  $.ajax({type: 'GET', url: '/api/issues'})
+    .then(function(data) {
+        if (data != null && data.length >= 0) {  
+          var rows = '';
+          data.forEach(function(issue, j) {
+            var row = `<tr>
+                        <td>` + issue["Title"] + `</td>
+                        <td>` +  issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + `</td>
+                        <td> <a class="btn btn-large btn-success" href="https://github.com/` + issue["URL"].split("repos")[1] + `" target="_blank">Open Issue URL</a></td>
+                      </tr>`
+            rows += row;
+          })
+          $("#issues").append(rows);
+      }
+      $(document).ready(function(){
+        $('#issues_table').DataTable();
+      });
+    })
+    .fail(function() {
+      alert('Could not get issues!');
+    });
+}
 
 // checkPRs makes an API call to see how many PRs this user has completed then
 // shows the results.
