@@ -108,9 +108,31 @@ section {
     margin-bottom: 0;
 }
 
-.no-gutter > [class*='col-'] {
-  padding-right: 0;
-  padding-left: 0;
+.logosoup {
+  text-align: center;
+}
+.logosoup img {
+  height: 3em;                     /* Uniform height */
+  margin-bottom: 1em;              /* Don't cram together */
+  filter: brightness(0) invert(1); /* Make images just flat white*/
+}
+.logosoup img:hover {
+  /*Show original images on hover*/
+  filter: none;
+  background-color: white;
+}
+.logosoup img.bg-gradient:hover {
+  background: linear-gradient(to bottom right, #8d397c, #c98b2a);
+}
+
+.platinum-sponsors img {
+  height: 5em;
+  margin-bottom: 2em;
+}
+
+.gold-sponsors img {
+  height: 4em;
+  margin-bottom: 2em;
 }
 
 #mainNav {
