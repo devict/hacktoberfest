@@ -66,6 +66,7 @@ func main() {
 	r.Get("/auth/{provider}/callback", authCallback)
 	r.Get("/auth/{provider}", gothic.BeginAuthHandler)
 
+	r.Get("/api/issues", issues)
 	r.Get("/api/prs", prs)
 	r.Get("/api/share", getShare)
 	r.Put("/api/share", updateShare)
