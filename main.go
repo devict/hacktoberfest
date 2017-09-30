@@ -40,6 +40,7 @@ var v = render.New(render.Options{
 var db *sql.DB
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	if err := setupDB(); err != nil {
 		log.Println("could not set up db", err)
 		os.Exit(1)

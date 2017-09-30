@@ -86,8 +86,11 @@ section {
   text-transform: uppercase;
   border: none;
   border-radius: 300px;
-  padding: 15px 30px;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.btn.btn-large {
+  padding: 15px 30px;
 }
 
 .btn-dark {

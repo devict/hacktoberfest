@@ -1,4 +1,9 @@
+{{ define "css-profile" }}
+  <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+{{ end }}
+
 {{ define "js-profile" }}
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="/public/js/profile.js"></script>
 {{ end }}
 
@@ -47,11 +52,9 @@
     </p>
     <div id="results"></div>
 
-    <h3> Open Issues </h3>
-    <br/>
-
-    <div id="issues_results">
-      <table id="issues_table" class="table table-stripedn" cellspacing="0" width="100%">
+    <div>
+      <h3>Open Issues</h3>
+      <table id="issues_table" class="table table-striped" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th>Title</th>

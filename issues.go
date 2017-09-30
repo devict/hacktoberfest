@@ -1,15 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"sync"
 	"time"
-	
+
 	"github.com/pkg/errors"
 )
 
+// Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
 	Title string
 	Date  time.Time
@@ -24,7 +27,7 @@ func issues(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	issues, err := fetchIssues(u.AccessToken)
+	issues, err := fetchIssues(r.Context(), u.AccessToken)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -35,34 +38,107 @@ func issues(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(issues); err != nil {
 		log.Println(err)
 	}
-	
-	log.Println(issues)
 }
 
-func fetchIssues(token string) ([]Issue, error) {
+// fetchIssues makes concurrent requests to the search api to get issues with
+// particular labels. Their API won't let us search for something label:A OR
+// label:B only label:A AND label:B so we have to make multiple requests.
+func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
+
+	// Kick off a worker for each of these labels
+	labels := []string{"hacktoberfest", "help wanted"}
+
+	// main chan where workers send their results
+	ch := make(chan Issue)
+
+	// errors is where workers will report failure. It has to have sufficient
+	// buffer space to prevent deadlocks because we only receive from it once
+	errors := make(chan error, len(labels))
+
+	// cCtx is a new context derived from our own. We use it to signal workers to
+	// stop early in the case of an error.
+	cCtx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	var wg sync.WaitGroup
+	wg.Add(len(labels))
+	for _, l := range labels {
+		go func(l string) {
+			if err := issueSearch(cCtx, l, token, ch); err != nil {
+				errors <- err
+			}
+			wg.Done()
+		}(l)
+	}
+
+	// When all searches are done close the channel so we stop trying to read it
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
+
+	var issues []Issue
+	for {
+		select {
+
+		// One of the workers failed so cancel the others and pass the error up
+		case err := <-errors:
+			cancel()
+			return nil, err
+
+		// Read from ch. If it was closed then we know we're done reading so dedupe
+		// our results and send them up. If it was open just append the value.
+		case i, open := <-ch:
+			if !open {
+				return dedupe(issues), nil
+			}
+			issues = append(issues, i)
+		}
+	}
+}
+
+// dedupe returns only the unique values from the issues provided. It uses the
+// URL field for identity.
+func dedupe(in []Issue) []Issue {
+	uniq := []Issue{}
+	seen := make(map[string]int)
+	for _, i := range in {
+		if seen[i.URL] == 0 {
+			uniq = append(uniq, i)
+		}
+		seen[i.URL]++
+	}
+	return uniq
+}
+
+// issueSearch makes a single request to the github search api. Issues are fed
+// into ch as they are found. An error is returned if we could not complete the
+// request or GitHub responds with anything but a 200. A ctx is provided so we
+// know if we need to quit early.
+func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) error {
+	ctx.Done()
+
 	req, err := http.NewRequest("GET", "https://api.github.com/search/issues", nil)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not build request")
+		return errors.Wrap(err, "could not build request")
 	}
-	
-	q := "is:open is:issue label:hacktoberfest"
-	
-	// add specific organizations to the search
-	for k, v := range orgs {
-		if v == true {
-			q += fmt.Sprintf(" org:%s", k)
-		}
+
+	// Tell the request to use our context so we can cancel it in-flight if needed
+	req = req.WithContext(ctx)
+
+	q := fmt.Sprintf(`is:open type:issue label:"%s"`, label)
+	for k := range orgs {
+		q += " org:" + k
 	}
-	
-	// add specific projects to the search
-	for k, v := range projects {
-		if v == true {
-			q += fmt.Sprintf(" repo:%s", k)
-		}
+	for k := range projects {
+		q += " repo:" + k
 	}
 
 	vals := req.URL.Query()
 	vals.Add("q", q)
+	vals.Add("sort", "updated")
+	vals.Add("order", "asc")
+	vals.Add("per_page", "100")
 	req.URL.RawQuery = vals.Encode()
 
 	// Use their access token so it counts against their rate limit
@@ -72,12 +148,12 @@ func fetchIssues(token string) ([]Issue, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not execute request")
+		return errors.Wrap(err, "could not execute request")
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return nil, errors.Wrapf(err, "status was %d, not 200", resp.StatusCode)
+		return errors.Wrapf(err, "status was %d, not 200", resp.StatusCode)
 	}
 
 	var data struct {
@@ -89,10 +165,9 @@ func fetchIssues(token string) ([]Issue, error) {
 		} `json:"items"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		return nil, errors.Wrap(err, "could not decode json")
+		return errors.Wrap(err, "could not decode json")
 	}
 
-	issues := []Issue{}
 	for _, item := range data.Items {
 		issue := Issue{
 			Title: item.Title,
@@ -102,11 +177,18 @@ func fetchIssues(token string) ([]Issue, error) {
 
 		issue.Repo, err = repoFromURL(item.RepoURL)
 		if err != nil {
-			return nil, errors.Wrapf(err, "could not identify repo from %s", item.RepoURL)
+			return errors.Wrapf(err, "could not identify repo from %s", item.RepoURL)
 		}
 
-		issues = append(issues, issue)
-	}
+		select {
 
-	return issues, nil
+		// Stop early because another worker failed
+		case <-ctx.Done():
+			return nil
+
+		// Send our issue on ch if we can
+		case ch <- issue:
+		}
+	}
+	return nil
 }
