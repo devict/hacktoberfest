@@ -1,11 +1,19 @@
 {{ define "css-profile" }}
-  <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+  <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/public/css/profile.css" rel="stylesheet">
 {{ end }}
 
 {{ define "js-profile" }}
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="/public/js/profile.js"></script>
 {{ end }}
+
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">Wichita Hacktoberfest</a>
+    <a class="navbar-right" href="https://github.com/devict/hacktoberfest/issues/12"><img src="/public/images/under-construction.gif" alt="Page is under construction" /></a>
+  </div>
+</nav>
 
 <div class="container">
   <section class="clearfix">

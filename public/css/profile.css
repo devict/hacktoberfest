@@ -1,0 +1,13 @@
+.navbar {
+  background-color: #A3492D;
+}
+.navbar-brand {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.navbar img {
+  height: 3em;
+}
