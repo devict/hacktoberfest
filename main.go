@@ -77,8 +77,6 @@ func main() {
 	// Serve static files
 	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 
-	r.HandleFunc("/favicon.ico", favicon)
-
 	r.Get("/", home)
 
 	addr := ":8080"
@@ -108,10 +106,6 @@ func home(w http.ResponseWriter, r *http.Request) {
 		Projects: projects,
 	}
 	v.HTML(w, http.StatusOK, "home", data)
-}
-
-func favicon(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "public/images/favicon.ico")
 }
 
 func dev() bool {
