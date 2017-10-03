@@ -91,7 +91,8 @@ r := render.New(render.Options{
     Extensions: []string{".tmpl", ".html"}, // Specify extensions to load for templates.
     Funcs: []template.FuncMap{AppHelpers}, // Specify helper function maps for templates to access.
     Delims: render.Delims{"{[{", "}]}"}, // Sets delimiters to the specified strings.
-    Charset: "UTF-8", // Sets encoding for json and html content-types. Default is "UTF-8".
+    Charset: "UTF-8", // Sets encoding for content-types. Default is "UTF-8".
+    DisableCharset: true, // Prevents the charset from being appended to the content type header. 
     IndentJSON: true, // Output human readable JSON.
     IndentXML: true, // Output human readable XML.
     PrefixJSON: []byte(")]}',\n"), // Prefixes JSON responses with the given bytes.
@@ -123,11 +124,17 @@ r := render.New(render.Options{
     Funcs: []template.FuncMap{},
     Delims: render.Delims{"{{", "}}"},
     Charset: "UTF-8",
+    DisableCharset: false,
     IndentJSON: false,
     IndentXML: false,
     PrefixJSON: []byte(""),
     PrefixXML: []byte(""),
+    BinaryContentType: "application/octet-stream",
     HTMLContentType: "text/html",
+    JSONContentType: "application/json",
+    JSONPContentType: "application/javascript",
+    TextContentType: "text/plain",
+    XMLContentType: "application/xhtml+xml",
     IsDevelopment: false,
     UnEscapeHTML: false,
     StreamingJSON: false,
@@ -364,26 +371,34 @@ if err != nil{
 package main
 
 import (
-	"net/http"
+    "io"
+    "net/http"
 
-	"github.com/labstack/echo"
-	"github.com/unrolled/render" // or "gopkg.in/unrolled/render.v1"
+    "github.com/labstack/echo"
+    "github.com/labstack/echo/engine/standard"
+    "github.com/unrolled/render"  // or "gopkg.in/unrolled/render.v1"
 )
 
+type RenderWrapper struct { // We need to wrap the renderer because we need a different signature for echo.
+    rnd *render.Render
+}
+
+func (r *RenderWrapper) Render(w io.Writer, name string, data interface{},c echo.Context) error {
+    return r.rnd.HTML(w, 0, name, data) // The zero status code is overwritten by echo.
+}
+
 func main() {
-	r := render.New(render.Options{
-		IndentJSON: true,
-	})
+    r := &RenderWrapper{render.New()}
 
-	e := echo.New()
+    e := echo.New()
 
-	// Routes
-	e.Get("/", func(c *echo.Context) error {
-        r.JSON(c.Response().Writer(), http.StatusOK, map[string]string{"welcome": "This is rendered JSON!"})
-        return nil
+    e.SetRenderer(r)
+    
+    e.GET("/", func(c echo.Context) error {
+        return c.Render(http.StatusOK, "TemplateName", "TemplateData")
     })
 
-	e.Run(":3000")
+    e.Run(standard.New(":1323"))
 }
 ~~~
 
@@ -447,7 +462,7 @@ package main
 import (
     "net/http"
 
-    "github.com/codegangsta/negroni"
+    "github.com/urfave/negroni"
     "github.com/unrolled/render"  // or "gopkg.in/unrolled/render.v1"
 )
 
