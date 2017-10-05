@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sort"
 	"sync"
 	"time"
 
@@ -14,10 +15,11 @@ import (
 
 // Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
-	Title string
-	Date  time.Time
-	URL   string
-	Repo  Repo
+	Title     string
+	Date      time.Time
+	URL       string
+	Repo      Repo
+	Languages []string
 }
 
 func issues(w http.ResponseWriter, r *http.Request) {
@@ -169,10 +171,17 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	}
 
 	for _, item := range data.Items {
+		lf := newLanguageFetcher()
+		languages, err := lf.repoLanguages(ctx, item.RepoURL, token)
+		if err != nil {
+			return err
+		}
+
 		issue := Issue{
-			Title: item.Title,
-			Date:  item.CreatedAt,
-			URL:   item.URL,
+			Title:     item.Title,
+			Date:      item.CreatedAt,
+			URL:       item.URL,
+			Languages: languages,
 		}
 
 		issue.Repo, err = repoFromURL(item.RepoURL)
@@ -191,4 +200,71 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		}
 	}
 	return nil
+}
+
+type languageFetcher struct {
+	fetchedRepos map[string][]string
+}
+
+func newLanguageFetcher() *languageFetcher {
+	return &languageFetcher{
+		fetchedRepos: make(map[string][]string),
+	}
+}
+
+func (lf *languageFetcher) repoLanguages(ctx context.Context, repoURL, token string) ([]string, error) {
+	// Return cached languages, if all ready fetched from repo.
+	if len(lf.fetchedRepos[repoURL]) > 0 {
+		return lf.fetchedRepos[repoURL], nil
+	}
+
+	// If not cached, get languages from repo.
+	req, err := http.NewRequest("GET", fmt.Sprintf("%v/languages", repoURL), nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not build request")
+	}
+
+	// Tell the request to use our context so we can cancel it in-flight if needed
+	req = req.WithContext(ctx)
+
+	// Use their access token so it counts against their rate limit
+	if token != "" {
+		req.Header.Add("Authorization", "token "+token)
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not execute request")
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return nil, errors.Wrapf(err, "status was %d, not 200", resp.StatusCode)
+	}
+	data := make(map[string]int)
+	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
+		return nil, errors.Wrap(err, "could not decode json")
+	}
+
+	// Do golang limbo to get sorted languages.
+	var langs []string
+	var keys []int
+	sortMap := make(map[int]string)
+	for k, v := range data {
+		keys = append(keys, v)
+		sortMap[v] = k
+	}
+	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
+
+	// Get top three langs.
+	for i, k := range keys {
+		if i > 2 {
+			break
+		}
+		langs = append(langs, sortMap[k])
+	}
+
+	// Cache repo languages.
+	lf.fetchedRepos[repoURL] = langs
+	return langs, nil
 }

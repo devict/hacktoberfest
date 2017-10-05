@@ -21,9 +21,25 @@ function loadIssues() {
       }
       var rows = '';
       data.forEach(function(issue) {
+        var langOne = "";
+        var langTwo = "";
+        var langThree = "";
+        var lang = issue["Languages"];
+        if (lang[0] != undefined) {
+          langOne = lang[0];
+        }
+        if (lang[1] != undefined) {
+          langTwo = lang[1];
+        }
+        if (lang[2] != undefined) {
+          langThree = lang[2];
+        }
         var row = "<tr>" +
           "<td>" + issue["Title"] + "</td>" +
           "<td>" +  issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
+          "<td>" +  langOne + "</td>" +
+          "<td>" +  langTwo + "</td>" +
+          "<td>" +  langThree + "</td>" +
           "<td> <a class='btn btn-sm btn-success' href='https://github.com/" + issue["URL"].split("repos")[1] + "' target='_blank'>Open Issue</a></td>" +
           "</tr>";
         rows += row;
