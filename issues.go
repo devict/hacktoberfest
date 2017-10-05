@@ -14,10 +14,11 @@ import (
 
 // Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
-	Title string
-	Date  time.Time
-	URL   string
-	Repo  Repo
+	Title  string
+	Date   time.Time
+	URL    string
+	Repo   Repo
+	Labels map[string]string
 }
 
 func issues(w http.ResponseWriter, r *http.Request) {
@@ -162,6 +163,10 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 			CreatedAt time.Time `json:"created_at"`
 			URL       string    `json:"url"`
 			RepoURL   string    `json:"repository_url"`
+			Labels    []struct {
+				Name  string `json:"name"`
+				Color string `json:"color"`
+			} `json:"labels"`
 		} `json:"items"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
@@ -169,10 +174,19 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	}
 
 	for _, item := range data.Items {
+		labels := make(map[string]string)
+		for _, label := range item.Labels {
+			// Show only labels that are not related to hacktoberfest.
+			if label.Name != "help wanted" && label.Name != "hacktoberfest" {
+				labels[label.Name] = label.Color
+			}
+		}
+
 		issue := Issue{
-			Title: item.Title,
-			Date:  item.CreatedAt,
-			URL:   item.URL,
+			Title:  item.Title,
+			Date:   item.CreatedAt,
+			URL:    item.URL,
+			Labels: labels,
 		}
 
 		issue.Repo, err = repoFromURL(item.RepoURL)

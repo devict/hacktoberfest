@@ -21,8 +21,13 @@ function loadIssues() {
       }
       var rows = '';
       data.forEach(function(issue) {
+        var tags = "";
+        for (var tag in issue["Labels"]) {
+          tags += "<span class='badge badge-default is-issue-tag' style='background-color: #" + issue["Labels"][tag] + ";'>" + tag + "</span>";
+        }
+
         var row = "<tr>" +
-          "<td>" + issue["Title"] + "</td>" +
+          "<td>" + issue["Title"] + tags + "</td>" +
           "<td>" +  issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
           "<td> <a class='btn btn-sm btn-success' href='https://github.com/" + issue["URL"].split("repos")[1] + "' target='_blank'>Open Issue</a></td>" +
           "</tr>";
