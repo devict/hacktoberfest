@@ -27,7 +27,7 @@ function loadIssues() {
         }
 
         var row = "<tr>" +
-          "<td>" + issue["Title"] + tags + "</td>" +
+          "<td>" + issue["Title"] + "</br>"+ tags + "</td>" +
           "<td>" +  issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
           "<td> <a class='btn btn-sm btn-success' href='https://github.com/" + issue["URL"].split("repos")[1] + "' target='_blank'>Open Issue</a></td>" +
           "</tr>";

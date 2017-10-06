@@ -12,6 +12,9 @@ import (
 	"github.com/pkg/errors"
 )
 
+// labels to fetch issues for
+var labels = []string{"hacktoberfest", "help wanted"}
+
 // Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
 	Title  string
@@ -45,9 +48,6 @@ func issues(w http.ResponseWriter, r *http.Request) {
 // particular labels. Their API won't let us search for something label:A OR
 // label:B only label:A AND label:B so we have to make multiple requests.
 func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
-
-	// Kick off a worker for each of these labels
-	labels := []string{"hacktoberfest", "help wanted"}
 
 	// main chan where workers send their results
 	ch := make(chan Issue)
@@ -174,11 +174,13 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	}
 
 	for _, item := range data.Items {
-		labels := make(map[string]string)
+		issueLabels := make(map[string]string)
 		for _, label := range item.Labels {
 			// Show only labels that are not related to hacktoberfest.
-			if label.Name != "help wanted" && label.Name != "hacktoberfest" {
-				labels[label.Name] = label.Color
+			for _, l := range labels {
+				if label.Name != l {
+					issueLabels[label.Name] = label.Color
+				}
 			}
 		}
 
@@ -186,7 +188,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 			Title:  item.Title,
 			Date:   item.CreatedAt,
 			URL:    item.URL,
-			Labels: labels,
+			Labels: issueLabels,
 		}
 
 		issue.Repo, err = repoFromURL(item.RepoURL)
