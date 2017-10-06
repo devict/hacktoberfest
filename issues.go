@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"sort"
 	"sync"
 	"time"
 
@@ -213,13 +212,13 @@ func newLanguageFetcher() *languageFetcher {
 }
 
 func (lf *languageFetcher) repoLanguages(ctx context.Context, repoURL, token string) ([]string, error) {
-	// Return cached languages, if all ready fetched from repo.
-	if len(lf.fetchedRepos[repoURL]) > 0 {
-		return lf.fetchedRepos[repoURL], nil
+	// Return cached languages if already fetched from repo.
+	if langs := lf.fetchedRepos[repoURL]; langs != nil {
+		return langs, nil
 	}
 
 	// If not cached, get languages from repo.
-	req, err := http.NewRequest("GET", fmt.Sprintf("%v/languages", repoURL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf(repoURL+"/languages"), nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not build request")
 	}
@@ -246,23 +245,8 @@ func (lf *languageFetcher) repoLanguages(ctx context.Context, repoURL, token str
 		return nil, errors.Wrap(err, "could not decode json")
 	}
 
-	// Do golang limbo to get sorted languages.
-	var langs []string
-	var keys []int
-	sortMap := make(map[int]string)
-	for k, v := range data {
-		keys = append(keys, v)
-		sortMap[v] = k
-	}
-	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
-
-	// Get top three langs.
-	for i, k := range keys {
-		if i > 2 {
-			break
-		}
-		langs = append(langs, sortMap[k])
-	}
+	// Get top three languages
+	langs := top(3, data)
 
 	// Cache repo languages.
 	lf.fetchedRepos[repoURL] = langs
