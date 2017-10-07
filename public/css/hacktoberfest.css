@@ -216,6 +216,10 @@ hr.light {
           #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus:hover {
             color: #2DA385; } }
 
+@media (max-width: 360px) {
+  #mainNav .navbar-brand {
+    font-size: 1rem; } }
+
 header {
   width: 100%;
   color: white;
