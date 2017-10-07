@@ -13,7 +13,7 @@ import (
 )
 
 // labels to fetch issues for
-var labels = []string{"hacktoberfest", "help wanted"}
+var labels = map[string]bool{"hacktoberfest": true, "help wanted": true}
 
 // Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
@@ -22,6 +22,12 @@ type Issue struct {
 	URL    string
 	Repo   Repo
 	Labels map[string]string
+}
+
+// Labels are labels on a tracked issue.
+type Labels []struct {
+	Name  string `json:"name"`
+	Color string `json:"color"`
 }
 
 func issues(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +69,7 @@ func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
 
 	var wg sync.WaitGroup
 	wg.Add(len(labels))
-	for _, l := range labels {
+	for l := range labels {
 		go func(l string) {
 			if err := issueSearch(cCtx, l, token, ch); err != nil {
 				errors <- err
@@ -163,10 +169,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 			CreatedAt time.Time `json:"created_at"`
 			URL       string    `json:"url"`
 			RepoURL   string    `json:"repository_url"`
-			Labels    []struct {
-				Name  string `json:"name"`
-				Color string `json:"color"`
-			} `json:"labels"`
+			Labels    `json:"labels"`
 		} `json:"items"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
@@ -174,15 +177,9 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	}
 
 	for _, item := range data.Items {
-		issueLabels := make(map[string]string)
-		for _, label := range item.Labels {
-			// Show only labels that are not related to hacktoberfest.
-			for _, l := range labels {
-				if label.Name != l {
-					issueLabels[label.Name] = label.Color
-				}
-			}
-		}
+
+		// filter out hacktoberfest labels
+		issueLabels := labelFilter(item.Labels)
 
 		issue := Issue{
 			Title:  item.Title,
@@ -207,4 +204,16 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		}
 	}
 	return nil
+}
+
+// labelFilter filters to show only labels that are
+// not related to hacktoberfest.
+func labelFilter(lbs Labels) map[string]string {
+	issueLabels := make(map[string]string)
+	for _, label := range lbs {
+		if !labels[label.Name] {
+			issueLabels[label.Name] = label.Color
+		}
+	}
+	return issueLabels
 }
