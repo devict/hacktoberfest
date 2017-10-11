@@ -12,12 +12,22 @@ import (
 	"github.com/pkg/errors"
 )
 
+// labels to fetch issues for
+var labels = map[string]bool{"hacktoberfest": true, "help wanted": true}
+
 // Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
-	Title string
-	Date  time.Time
-	URL   string
-	Repo  Repo
+	Title  string
+	Date   time.Time
+	URL    string
+	Repo   Repo
+	Labels map[string]string
+}
+
+// Labels are labels on a tracked issue.
+type Labels []struct {
+	Name  string `json:"name"`
+	Color string `json:"color"`
 }
 
 func issues(w http.ResponseWriter, r *http.Request) {
@@ -45,9 +55,6 @@ func issues(w http.ResponseWriter, r *http.Request) {
 // label:B only label:A AND label:B so we have to make multiple requests.
 func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
 
-	// Kick off a worker for each of these labels
-	labels := []string{"hacktoberfest", "help wanted"}
-
 	// main chan where workers send their results
 	ch := make(chan Issue)
 
@@ -62,7 +69,7 @@ func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
 
 	var wg sync.WaitGroup
 	wg.Add(len(labels))
-	for _, l := range labels {
+	for l := range labels {
 		go func(l string) {
 			if err := issueSearch(cCtx, l, token, ch); err != nil {
 				errors <- err
@@ -162,6 +169,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 			CreatedAt time.Time `json:"created_at"`
 			URL       string    `json:"url"`
 			RepoURL   string    `json:"repository_url"`
+			Labels    `json:"labels"`
 		} `json:"items"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
@@ -169,10 +177,15 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	}
 
 	for _, item := range data.Items {
+
+		// filter out hacktoberfest labels
+		issueLabels := labelFilter(item.Labels)
+
 		issue := Issue{
-			Title: item.Title,
-			Date:  item.CreatedAt,
-			URL:   item.URL,
+			Title:  item.Title,
+			Date:   item.CreatedAt,
+			URL:    item.URL,
+			Labels: issueLabels,
 		}
 
 		issue.Repo, err = repoFromURL(item.RepoURL)
@@ -191,4 +204,16 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		}
 	}
 	return nil
+}
+
+// labelFilter filters to show only labels that are
+// not related to hacktoberfest.
+func labelFilter(lbs Labels) map[string]string {
+	issueLabels := make(map[string]string)
+	for _, label := range lbs {
+		if !labels[label.Name] {
+			issueLabels[label.Name] = label.Color
+		}
+	}
+	return issueLabels
 }
