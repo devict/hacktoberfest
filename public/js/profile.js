@@ -8,17 +8,25 @@ $(function() {
     getShareInfo();
   }
 
-  loadIssues();
+  $('#issues_show').click(loadIssues);
   $('#check').click(checkPRs);
   $('#share_info').change(saveShareInfo);
 });
 
 function loadIssues() {
+  var btn = $('#issues_show');
+  if (btn.hasClass("disabled")) {
+    return;
+  }
+  btn.append(" <i class='fa fa-spin fa-spinner'></i>");
+  btn.addClass("disabled");
+
   $.ajax({type: 'GET', url: '/api/issues'})
     .then(function(data) {
       if (!data || !data.length) {
         return;
       }
+
       var rows = '';
       data.forEach(function(issue) {
         var tags = "";
@@ -29,16 +37,16 @@ function loadIssues() {
           tags = "</br>" + tags;
         }
 
-        var row = "<tr>" +
-          "<td>" + issue["Title"] + tags + "</td>" +
-          "<td>" +  issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
-          "<td>" +  issue["Languages"].join(", ") + "</td>" +
-          "<td> <a class='btn btn-sm btn-success' href='https://github.com/" + issue["URL"].split("repos")[1] + "' target='_blank'>Open Issue</a></td>" +
+        rows += "<tr>" +
+          "<td> <a href='" + issue["URL"] + "'>" + issue["Title"] + "</a>" + tags + "</td>" +
+          "<td>" + issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
+          "<td>" + issue["Languages"].join(", ") + "</td>" +
           "</tr>";
-        rows += row;
       })
       $("#issues").append(rows);
+      $('#issues_table').show();
       $('#issues_table').DataTable();
+      btn.hide();
     })
     .fail(function() {
       alert('Could not get issues!');
@@ -61,7 +69,7 @@ function checkPRs() {
         var t = $('#pr-template-' + (p.Valid ? 'valid' : 'invalid') + ' div').clone();
 
         t.find('.title').text(p.Title);
-        t.find('.date').text(p.Date);
+        t.find('.date').text(Date(p.Date));
         t.find('.repo').text(p.Repo.Owner + '/' + p.Repo.Name);
 
         results.prepend(t);

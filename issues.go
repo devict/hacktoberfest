@@ -168,7 +168,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		Items []struct {
 			Title     string    `json:"title"`
 			CreatedAt time.Time `json:"created_at"`
-			URL       string    `json:"url"`
+			HTMLURL   string    `json:"html_url"`
 			RepoURL   string    `json:"repository_url"`
 			Labels    `json:"labels"`
 		} `json:"items"`
@@ -191,7 +191,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		issue := Issue{
 			Title:     item.Title,
 			Date:      item.CreatedAt,
-			URL:       item.URL,
+			URL:       item.HTMLURL,
 			Labels:    issueLabels,
 			Languages: languages,
 		}

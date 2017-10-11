@@ -12,72 +12,146 @@
 <nav class="navbar">
   <div class="container">
     <a class="navbar-brand" href="/">Wichita Hacktoberfest</a>
-    <a class="navbar-right" href="https://github.com/devict/hacktoberfest/issues/12"><img src="/public/images/under-construction.gif" alt="Page is under construction" /></a>
+    <img src="{{.User.AvatarURL}}" class="navgar-right img-responsive" />
   </div>
 </nav>
 
-<div class="container">
-  <section class="clearfix">
-    <p class="text-center">
-    {{ if .New }}
-      Well howdy, {{ .User.NickName }}. Thanks for signing up!
-    {{ else }}
-      Welcome back, {{ .User.NickName }}!
-    {{ end }}
-    </p>
-    <p class="text-center">
-      We've marked down this information for you:
-    </p>
-    <div class="row justify-content-center">
-      <div class="col-4 text-right">
-        <img src="{{.User.AvatarURL}}" class="img-responsive img-circle img-thumbnail" width="200px" />
-      </div>
-      <div class="col-4">
-        <dl>
-          <dt>Name</dt>
-          <dd>{{.User.Name}}</dd>
-          <dt>Username</dt>
-          <dd>{{.User.NickName}}</dd>
-          <dt>Email</dt>
-          <dd>{{.User.Email}}</dd>
-          <dt class="share invisible">Share Info With Sponsors</dt>
-          <dd class="share invisible">
-          <input type="checkbox" id="share_info" />
-          <span id="share_info_state"></span>
-          </dd>
-        </dl>
-      </div>
-    </div>
+<section class="clearfix">
+  <p class="text-center">
+  {{ if .New }}
+    Well howdy, {{ .User.NickName }}. Thanks for signing up!
+  {{ else }}
+    Welcome back, {{ .User.NickName }}!
+  {{ end }}
+  Here's what we know about you.
+  </p>
 
-    <h3>What's next?</h3>
+  <div class="container">
+    <form>
+      <div class="form-group row">
+        <label for="name" class="col-sm-5 text-right col-form-label">Name</label>
+        <div class="col-sm-5">
+          <input type="name" class="form-control" readonly id="name" value="{{ .User.Name }}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="username" class="col-sm-5 text-right col-form-label">Username</label>
+        <div class="col-sm-5">
+          <input type="username" class="form-control" readonly id="username" value="{{ .User.NickName }}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-sm-5 text-right col-form-label">Email</label>
+        <div class="col-sm-5">
+          <input type="email" class="form-control" readonly id="email" value="{{ .User.Email }}">
+        </div>
+      </div>
+      <div class="form-group row share">
+        <label class="col-sm-5 text-right">Share Info With Sponsors</label>
+        <div class="col-sm-5">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" id="share_info" />
+              <span id="share_info_state"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section-dark">
+  <div class="container">
+    <h2>What's next?</h2>
     <p class="text-justify">
-    Start contributing to open source in Wichita by opening pull requests
-    against one of the approved projects or organizations. Come back here to
-    check your status throughout the month. When the event is over you will be
-    contacted to claim your prize!
+    Make 4 contributions to open source in Wichita by opening pull requests
+    against approved projects or organizations. We want to make that easy so
+    follow these steps!
     </p>
-    <p>
-    <button id="check" class="btn btn-primary">Check my status!</button>
-    </p>
-    <div id="results"></div>
+  </div>
+</section>
 
-    <div>
-      <h3>Open Issues</h3>
-      <table id="issues_table" class="table table-striped" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Repository</th>
-            <th>Languages</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody id="issues">
-        </tbody>
-      </table>
-    </div>
-  </section>
-</div>
+<section>
+  <div class="container">
+    <h3><i class="fa fa-fw fa-shield icon-dark sr-icons"></i> Pick an Issue</h3>
+    <p class="text-justify">
+    Find something to work on for a Wichita based project. You can look through
+    open issues or suggest a new change yourself. For Wichita Hacktoberfest we
+    are counting Pull Requests against these organizations or projects.
+    </p>
+
+    <ul class="list-inline">
+      {{ range $o, $i := .Orgs }}
+        <li class="list-inline-item">
+          <a class="dark" href="https://github.com/{{ $o }}">{{ $o }}</a>
+        </li>
+      {{ end }}
+      {{ range $p, $i := .Projects }}
+        <li class="list-inline-item">
+          <a class="dark" href="https://github.com/{{ $p }}">{{ $p }}</a>
+        </li>
+      {{ end }}
+    </ul>
+
+    <button id="issues_show" class="btn btn-primary">See Open Issues</button>
+    <table id="issues_table" class="table table-striped table-bordered" style="display: none;" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Repository</th>
+          <th>Languages</th>
+        </tr>
+      </thead>
+      <tbody id="issues"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section-dark">
+  <div class="container">
+    <h3><i class="fa fa-fw fa-laptop sr-icons"></i> Make a Change</h3>
+    <p class="text-justify">
+    Either make changes directly on github.com or fork the project and clone it
+    to your local machine to do your work. Push your changes to your fork.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h3><i class="fa fa-fw fa-leaf icon-dark sr-icons"></i> Submit a PR</h3>
+    <p class="text-justify">
+    Open a Pull Request back to the original project. This asks the project's
+    maintainer to consider merging your changes into the project.
+    </p>
+  </div>
+</section>
+
+<section class="section-dark">
+  <div class="container">
+    <h3><i class="fa fa-fw fa-repeat sr-icons"></i> Repeat 3 More Times</h3>
+    <p class="text-justify">
+    Go pick another issue and start the cycle again. Remember the target is 4 PRs.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h3><i class="fa fa-fw fa-beer icon-dark sr-icons"></i> Enjoy Your T-Shirt</h3>
+    <p class="text-justify">
+    Come here to check your status throughout the month. When the event is
+    over you will be contacted to claim your prize!
+    </p>
+    <button id="check" class="btn btn-primary">Check my status!</button>
+    <div id="results"></div>
+  </div>
+</section>
+
+<footer>
+  {{/* TODO put something here? */}}
+</footer>
 
 {{ if .New }}
 <div class="modal fade" id="sponsorShareModal" tabindex="-1" role="dialog" aria-labelledby="sponsorSharePrompt" aria-hidden="true">
@@ -112,27 +186,22 @@
 </div>
 {{ end }}
 
-{{/* The contents of these two invisible divs are cloned by JavaScript then
+{{/* The contents of these two hidden divs are cloned by JavaScript then
 certain bits are filled in. The first is for valid PRs and the second is for
 invalid */}}
-<div id="pr-template-valid" class="invisible">
+<div id="pr-template-valid">
   <div class="alert alert-success">
-    <p>
-      <i class="fa fa-check-circle"></i> <span class="title"></span>
-    </p>
-    <p>Opened <span class="date"></span> against <span class="repo"></span></p>
+    <p><i class="fa fa-check-circle"></i> <span class="title"></span></p>
+    <p>Opened against <span class="repo"></span> on <span class="date"></span></p>
   </div>
 </div>
 
-<div id="pr-template-invalid" class="invisible">
+<div id="pr-template-invalid">
   <div class="alert alert-danger">
-    <p>
-      <i class="fa fa-exclamation-circle"></i> <span class="title"></span>
-    </p>
-    <p>Opened <span class="date"></span> against <span class="repo"></span></p>
-    <p>This PR does not count for the Wichita Hacktoberfest because it is not
-    against an approved project or organization. If you feel it should be then
-    please <a href="https://github.com/devict/hacktoberfest/issues/new">file an
-    issue</a>.</p>
+    <p><i class="fa fa-exclamation-circle"></i> <span class="title"></span></p>
+    <p>Opened against <span class="repo"></span> on <span class="date"></span></p>
+    <p><small>This PR is not against an approved project or organization. If
+      you feel it should qualify please <a href="https://github.com/devict/hacktoberfest/issues/new">file an
+      issue</a>.</small></p>
   </div>
 </div>

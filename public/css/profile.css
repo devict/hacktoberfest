@@ -12,6 +12,34 @@
   height: 3em;
 }
 
-.is-issue-tag {
+/* Add some left margin to all issue tags that are after another */
+.is-issue-tag + .is-issue-tag {
   margin-left: 6px;
+}
+
+section {
+  padding: 1em;
+}
+
+/* Stick a comma after each project/org except the last */
+.list-inline-item:not(:last-child) a:after {
+    content: ",";
+}
+
+/**
+ * preface the last item with "and ". It's on the ::before of the li not the a
+ * so it's not part of the link
+ */
+.list-inline-item:last-child::before {
+    content: "and ";
+}
+
+#pr-template-invalid, #pr-template-valid {
+  display: none;
+}
+
+footer {
+  min-height: 4em;
+  color: white;
+  background-color: #A3492D;
 }
