@@ -41,6 +41,9 @@ func authCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Throw this away because it makes cookies too large
+	user.RawData = make(map[string]interface{})
+
 	s, _ := sess.Get(r, "session")
 	s.Values["user"] = user
 	s.Values["new"], err = saveUser(user)
@@ -52,6 +55,8 @@ func authCallback(w http.ResponseWriter, r *http.Request) {
 
 	if err := s.Save(r, w); err != nil {
 		log.Println(err)
+		http.Error(w, "could not save cookie", http.StatusInternalServerError)
+		return
 	}
 
 	http.Redirect(w, r, "/profile", http.StatusTemporaryRedirect)

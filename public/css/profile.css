@@ -11,3 +11,7 @@
 .navbar img {
   height: 3em;
 }
+
+.is-issue-tag {
+  margin-left: 6px;
+}
