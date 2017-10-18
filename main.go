@@ -30,7 +30,8 @@ var orgs = map[string]bool{
 var projects = map[string]bool{
 	"imacrayon/eventsinwichita": true,
 	"br0xen/boltbrowser":        true,
-	"benblankley/fort-rpg":        true,
+	"benblankley/fort-rpg":      true,
+	"chrisl8/ArloBot":           true,
 }
 
 var v = render.New(render.Options{

@@ -21,11 +21,15 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	info := struct {
-		User goth.User
-		New  bool
+		Orgs     map[string]bool
+		Projects map[string]bool
+		User     goth.User
+		New      bool
 	}{
-		User: u,
-		New:  n,
+		Orgs:     orgs,
+		Projects: projects,
+		User:     u,
+		New:      n,
 	}
 
 	v.HTML(w, http.StatusOK, "profile", info)

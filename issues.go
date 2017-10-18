@@ -17,11 +17,12 @@ var labels = map[string]bool{"hacktoberfest": true, "help wanted": true}
 
 // Issue is a requested change against one of our tracked GitHub repos.
 type Issue struct {
-	Title  string
-	Date   time.Time
-	URL    string
-	Repo   Repo
-	Labels map[string]string
+	Title     string
+	Date      time.Time
+	URL       string
+	Repo      Repo
+	Labels    map[string]string
+	Languages []string
 }
 
 // Labels are labels on a tracked issue.
@@ -167,7 +168,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		Items []struct {
 			Title     string    `json:"title"`
 			CreatedAt time.Time `json:"created_at"`
-			URL       string    `json:"url"`
+			HTMLURL   string    `json:"html_url"`
 			RepoURL   string    `json:"repository_url"`
 			Labels    `json:"labels"`
 		} `json:"items"`
@@ -178,14 +179,21 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 
 	for _, item := range data.Items {
 
+		lf := newLanguageFetcher()
+		languages, err := lf.repoLanguages(ctx, item.RepoURL, token)
+		if err != nil {
+			return err
+		}
+
 		// filter out hacktoberfest labels
 		issueLabels := labelFilter(item.Labels)
 
 		issue := Issue{
-			Title:  item.Title,
-			Date:   item.CreatedAt,
-			URL:    item.URL,
-			Labels: issueLabels,
+			Title:     item.Title,
+			Date:      item.CreatedAt,
+			URL:       item.HTMLURL,
+			Labels:    issueLabels,
+			Languages: languages,
 		}
 
 		issue.Repo, err = repoFromURL(item.RepoURL)
@@ -204,6 +212,58 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 		}
 	}
 	return nil
+}
+
+type languageFetcher struct {
+	fetchedRepos map[string][]string
+}
+
+func newLanguageFetcher() *languageFetcher {
+	return &languageFetcher{
+		fetchedRepos: make(map[string][]string),
+	}
+}
+
+func (lf *languageFetcher) repoLanguages(ctx context.Context, repoURL, token string) ([]string, error) {
+	// Return cached languages if already fetched from repo.
+	if langs := lf.fetchedRepos[repoURL]; langs != nil {
+		return langs, nil
+	}
+
+	// If not cached, get languages from repo.
+	req, err := http.NewRequest("GET", fmt.Sprintf(repoURL+"/languages"), nil)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not build request")
+	}
+
+	// Tell the request to use our context so we can cancel it in-flight if needed
+	req = req.WithContext(ctx)
+
+	// Use their access token so it counts against their rate limit
+	if token != "" {
+		req.Header.Add("Authorization", "token "+token)
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not execute request")
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return nil, errors.Wrapf(err, "status was %d, not 200", resp.StatusCode)
+	}
+	data := make(map[string]int)
+	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
+		return nil, errors.Wrap(err, "could not decode json")
+	}
+
+	// Get top three languages
+	langs := top(3, data)
+
+	// Cache repo languages.
+	lf.fetchedRepos[repoURL] = langs
+	return langs, nil
 }
 
 // labelFilter filters to show only labels that are
