@@ -43,3 +43,7 @@ footer {
   color: white;
   background-color: #A3492D;
 }
+
+#results {
+    display: none;
+}

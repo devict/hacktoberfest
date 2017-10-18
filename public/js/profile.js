@@ -160,3 +160,18 @@ function setShareInfoState(share) {
   }
   $('.share').removeClass('invisible');
 }
+
+// toggleStatus shows and hides the #results div and updates the #check buttons
+// text to contain text that reflects whether or not the #results div is visible 
+function toggleStatus() {
+  const results = $('#results');
+  const btnCheck = $('#check');
+
+  if (results.is(':visible')) {
+    results.slideUp()
+      btnCheck.text("Check my status!");
+  } else {
+    results.slideDown();
+    btnCheck.text("Hide my status!");
+  }
+}
