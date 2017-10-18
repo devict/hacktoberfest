@@ -53,9 +53,8 @@ func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
 	// main chan where workers send their results
 	ch := make(chan Issue)
 
-	// Setup and start a languageFetcher
+	// Setup a languageFetcher
 	lf := newLanguageFetcher()
-	go lf.start()
 
 	// errors is where workers will report failure. It has to have sufficient
 	// buffer space to prevent deadlocks because we only receive from it once
@@ -96,10 +95,13 @@ func fetchIssues(ctx context.Context, token string) ([]Issue, error) {
 		// our results and send them up. If it was open just append the value.
 		case i, open := <-ch:
 			if !open {
-				// Check for errors and wait for language workers to finish.
-				if err := lf.wait(cancel); err != nil {
+				// wait for languages to be fetched and return error if there are any.
+				lf.wg.Wait()
+				if len(lf.errors) != 0 {
+					err := <-lf.errors
 					return nil, err
 				}
+
 				// Append repo languages to deduped issues.
 				return lf.appendLanguages(dedupe(issues)), nil
 			}

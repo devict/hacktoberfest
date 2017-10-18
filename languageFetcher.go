@@ -11,22 +11,20 @@ import (
 )
 
 // languageFetcher manages fetching repo languages
-// by using a channel of functions to manage the
+// by using a mutex to handle accress to the
 // fetchedRepos cache.
 type languageFetcher struct {
+	wg     sync.WaitGroup
+	errors chan error
+
+	mu           sync.Mutex
 	fetchedRepos map[string][]string
-	wg           sync.WaitGroup
-	action       chan func()
-	stop         chan struct{}
-	errors       chan error
 }
 
 // newLanguageFetcher makes all the things.
 func newLanguageFetcher() *languageFetcher {
 	return &languageFetcher{
 		fetchedRepos: make(map[string][]string),
-		action:       make(chan func()),
-		stop:         make(chan struct{}),
 		errors:       make(chan error),
 	}
 }
@@ -35,20 +33,11 @@ func newLanguageFetcher() *languageFetcher {
 func (lf *languageFetcher) repoLanguages(ctx context.Context, repoURL, token string) {
 	defer lf.wg.Done()
 
-	// Check if repo is in cache.
-	isCached := make(chan bool)
-	lf.action <- func() {
-		if langs := lf.fetchedRepos[repoURL]; langs != nil {
-			isCached <- true
-			return
-		}
-		isCached <- false
-	}
-
-	// If cached don't get languages for repo again
-	if <-isCached {
+	lf.mu.Lock()
+	if langs := lf.fetchedRepos[repoURL]; langs != nil {
 		return
 	}
+	lf.mu.Unlock()
 
 	// If not cached, get languages from repo.
 	req, err := http.NewRequest("GET", fmt.Sprintf(repoURL+"/languages"), nil)
@@ -84,26 +73,9 @@ func (lf *languageFetcher) repoLanguages(ctx context.Context, repoURL, token str
 	// Get top three languages
 	langs := top(3, data)
 
-	// Cache repo languages.
-	actionDone := make(chan bool, 1)
-	lf.action <- func() {
-		lf.fetchedRepos[repoURL] = langs
-		actionDone <- true
-	}
-	<-actionDone
-}
-
-// start starts a loop that runs action functions in the
-// order recieved. Also, it has a stop chan just in case.
-func (lf *languageFetcher) start() {
-	for {
-		select {
-		case f := <-lf.action:
-			f()
-		case <-lf.stop:
-			return
-		}
-	}
+	lf.mu.Lock()
+	lf.fetchedRepos[repoURL] = langs
+	lf.mu.Unlock()
 }
 
 // appendLanguages to deduped issues.
@@ -113,25 +85,4 @@ func (lf *languageFetcher) appendLanguages(issues []Issue) (out []Issue) {
 		out = append(out, issue)
 	}
 	return
-}
-
-// wait checks for errors or waits for language workers to finish.
-func (lf *languageFetcher) wait(cancel context.CancelFunc) error {
-	wgDone := make(chan struct{})
-	for {
-		select {
-		// One of the language workers failed so cancel the others and pass the error up
-		case err := <-lf.errors:
-			cancel()
-			return err
-		case <-wgDone:
-			return nil
-		}
-	}
-}
-
-// workerWait closes wgDone because wg.Wait() doesn't return a channel.
-func workerWait(lf *languageFetcher, wgDone chan struct{}) {
-	lf.wg.Wait()
-	close(wgDone)
 }
