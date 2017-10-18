@@ -11,7 +11,6 @@ $(function() {
   loadIssues();
   $('#check').click(checkPRs);
   $('#share_info').change(saveShareInfo);
-  toggleStatus();
 });
 
 function loadIssues() {

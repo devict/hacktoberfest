@@ -11,3 +11,7 @@
 .navbar img {
   height: 3em;
 }
+
+#results {
+  display: none;
+}
