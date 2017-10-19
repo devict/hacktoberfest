@@ -32,6 +32,7 @@ var projects = map[string]bool{
 	"br0xen/boltbrowser":        true,
 	"benblankley/fort-rpg":      true,
 	"chrisl8/ArloBot":           true,
+	"blunket/image-checker":     true,
 }
 
 var v = render.New(render.Options{
