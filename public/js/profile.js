@@ -57,6 +57,7 @@ function loadIssues() {
 // shows the results.
 function checkPRs() {
   var results = $('#results');
+  var btnCheck = $('#check');
   results.empty();
 
   $.ajax({type: 'GET', url: '/api/prs'})
@@ -95,6 +96,16 @@ function checkPRs() {
     .fail(function() {
       alert('Could not get PRs!');
     });
+
+    // Show/Hide the users status and update the text inside btnCheck to reflect
+    // whether or not the users status is visible or hidden
+    if (results.is(':visible')) {
+      results.slideUp()
+      btnCheck.text("Check my status!");
+    } else {
+      results.slideDown();
+      btnCheck.text("Hide my status!");
+    }
 }
 
 // allowSharing is the action when a new users accepts the sponsor information
@@ -159,19 +170,4 @@ function setShareInfoState(share) {
       break;
   }
   $('.share').removeClass('invisible');
-}
-
-// toggleStatus shows and hides the #results div and updates the #check buttons
-// text to contain text that reflects whether or not the #results div is visible 
-function toggleStatus() {
-  const results = $('#results');
-  const btnCheck = $('#check');
-
-  if (results.is(':visible')) {
-    results.slideUp()
-      btnCheck.text("Check my status!");
-  } else {
-    results.slideDown();
-    btnCheck.text("Hide my status!");
-  }
 }
