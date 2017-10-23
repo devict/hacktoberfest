@@ -27,27 +27,27 @@
   </p>
 
   <div class="container">
-    <form>
+    <form id="information">
       <div class="form-group row">
-        <label for="name" class="col-sm-5 text-right col-form-label">Name</label>
+        <label for="name" class="col-sm-5 col-form-label">Name</label>
         <div class="col-sm-5">
           <input type="name" class="form-control" readonly id="name" value="{{ .User.Name }}">
         </div>
       </div>
       <div class="form-group row">
-        <label for="username" class="col-sm-5 text-right col-form-label">Username</label>
+        <label for="username" class="col-sm-5 col-form-label">Username</label>
         <div class="col-sm-5">
           <input type="username" class="form-control" readonly id="username" value="{{ .User.NickName }}">
         </div>
       </div>
       <div class="form-group row">
-        <label for="email" class="col-sm-5 text-right col-form-label">Email</label>
+        <label for="email" class="col-sm-5 col-form-label">Email</label>
         <div class="col-sm-5">
           <input type="email" class="form-control" readonly id="email" value="{{ .User.Email }}">
         </div>
       </div>
       <div class="form-group row share">
-        <label class="col-sm-5 text-right">Share Info With Sponsors</label>
+        <label class="col-sm-5">Share Info With Sponsors</label>
         <div class="col-sm-5">
           <div class="form-check">
             <label class="form-check-label">
@@ -95,16 +95,18 @@
     </ul>
 
     <button id="issues_show" class="btn btn-primary">See Open Issues</button>
-    <table id="issues_table" class="table table-striped table-bordered" style="display: none;" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Repository</th>
-          <th>Languages</th>
-        </tr>
-      </thead>
-      <tbody id="issues"></tbody>
-    </table>
+    <div class="table-responsive">
+      <table id="issues_table" class="table table-striped table-bordered" style="display: none;" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Repository</th>
+            <th>Languages</th>
+          </tr>
+        </thead>
+        <tbody id="issues"></tbody>
+      </table>
+    </div>
   </div>
 </section>
 

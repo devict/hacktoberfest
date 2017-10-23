@@ -21,6 +21,14 @@ section {
   padding: 1em;
 }
 
+section p:last-child {
+  margin-bottom: 0;
+}
+
+.list-inline-item:not(:last-child) {
+  margin-right: 0;
+}
+
 /* Stick a comma after each project/org except the last */
 .list-inline-item:not(:last-child) a:after {
     content: ",";
@@ -38,8 +46,22 @@ section {
   display: none;
 }
 
+#issues_table_wrapper {
+  padding: 0;
+}
+
+#results .lead {
+  margin-top: 20px;
+}
+
 footer {
   min-height: 4em;
   color: white;
   background-color: #A3492D;
+}
+
+@media (min-width: 576px) {
+  #information label {
+    text-align: right;
+  }
 }
