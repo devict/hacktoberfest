@@ -59,3 +59,9 @@ footer {
   color: white;
   background-color: #A3492D;
 }
+
+@media (min-width: 576px) {
+  #information label {
+    text-align: right;
+  }
+}
