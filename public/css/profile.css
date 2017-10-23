@@ -38,6 +38,10 @@ section {
   display: none;
 }
 
+#issues_table_wrapper {
+  padding: 0;
+}
+
 footer {
   min-height: 4em;
   color: white;
