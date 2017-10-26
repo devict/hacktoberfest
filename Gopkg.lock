@@ -50,6 +50,12 @@
   version = "v1.42.0"
 
 [[projects]]
+  name = "github.com/peterhellberg/link"
+  packages = ["."]
+  revision = "d1cebc7ea14a5fc0de7cb4a45acae773161642c6"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/pkg/errors"
   packages = ["."]
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
@@ -82,6 +88,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9b0ffc9ab41265838bfee38d59ee34788a3d8b1a5c33072af440e83d6d05aa9f"
+  inputs-digest = "65d379386dcb681184d38f64eb51c8b78f625670450aa033be47c335f5a5191f"
   solver-name = "gps-cdcl"
   solver-version = 1
