@@ -33,7 +33,7 @@ var projects = map[string]bool{
 	"benblankley/fort-rpg":      true,
 	"chrisl8/ArloBot":           true,
 	"blunket/image-checker":     true,
-	"hitjim/ting-bill-split":	true,
+	"hitjim/ting-bill-split":    true,
 }
 
 var v = render.New(render.Options{
