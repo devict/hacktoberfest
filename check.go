@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/pkg/errors"
@@ -30,14 +29,21 @@ func check() error {
 		return errors.Wrap(err, "could not iterate over user result")
 	}
 
+	prs, err := fetchPRs(users, os.Getenv("PAT"))
+	if err != nil {
+		return errors.Wrap(err, "could not fetch PRs")
+	}
+
+	prsByUser := make(map[string][]PR)
+	for _, p := range prs {
+		prsByUser[p.User] = append(prsByUser[p.User], p)
+	}
+
 	var succesful, unsuccessful int
 	fmt.Printf("   %20s %8s %8s\n", "Username", "Valid", "Invalid")
 	for i, u := range users {
-		prs, err := fetchPRs(u, os.Getenv("PAT"))
-		if err != nil {
-			log.Println("could not fetch PRs for", u, err)
-			continue
-		}
+		prs := prsByUser[u]
+
 		var valid, invalid int
 		for _, p := range prs {
 			if p.Valid {
