@@ -16,19 +16,20 @@ import (
 	"github.com/unrolled/render"
 )
 
+
 // Any project under one of these organizations counts
 var orgs = map[string]bool{
 	"devict":         true,
-	"MakeICT":        true,
-	"openwichita":    true,
+	"makeict":        true,
+	"openwichita":    false,
 	"StartupWichita": true,
-	"Wichitalks":     true,
-	"Ennovar":        true,
+	"wichitalks":     false,
+	"ennovar":        false,
 }
 
 // These specific projects also count
 var projects = map[string]bool{
-	"imacrayon/eventsinwichita": true,
+	"imacrayon/eventsinwichita": false,
 	"br0xen/boltbrowser":        true,
 	"benblankley/fort-rpg":      true,
 	"chrisl8/ArloBot":           true,
