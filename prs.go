@@ -48,7 +48,7 @@ func fetchPRs(usernames []string, token string) ([]PR, error) {
 		return nil, errors.Wrap(err, "could not build request")
 	}
 
-	q := "type:pr created:2017-10-01T00:00:00-12:00..2017-10-31T23:59:59-12:00"
+	q := "type:pr created:2019-10-01T00:00:00-12:00..2019-10-31T23:59:59-12:00"
 	for _, u := range usernames {
 		q = fmt.Sprintf("%s author:%s", q, u)
 	}
