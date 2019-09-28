@@ -29,7 +29,7 @@ var orgs = map[string]bool{
 
 // These specific projects also count
 var projects = map[string]bool{
-	"imacrayon/eventsinwichita": false,
+	"imacrayon/eventsinwichita": true,
 	"br0xen/boltbrowser":        true,
 	"benblankley/fort-rpg":      true,
 	"chrisl8/ArloBot":           true,
