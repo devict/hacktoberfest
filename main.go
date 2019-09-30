@@ -35,6 +35,7 @@ var projects = map[string]bool{
 	"chrisl8/ArloBot":           true,
 	"blunket/image-checker":     true,
 	"hitjim/ting-bill-split":    true,
+	"nessalc/food-groups":       true,
 }
 
 var v = render.New(render.Options{
