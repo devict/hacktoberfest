@@ -83,14 +83,18 @@
 
     <ul class="list-group">
       {{ range $o, $i := .Orgs }}
-        <li class="list-group-item">
-          <a href="https://github.com/{{ $o }}">{{ $o }}</a>
-        </li>
+        {{ if $i }}
+          <li class="list-group-item">
+            <a href="https://github.com/{{ $o }}">{{ $o }}</a>
+          </li>
+        {{ end }}
       {{ end }}
       {{ range $p, $i := .Projects }}
-        <li class="list-group-item">
-          <a class="dark" href="https://github.com/{{ $p }}">{{ $p }}</a>
-        </li>
+        {{ if $i }}
+          <li class="list-group-item">
+            <a class="dark" href="https://github.com/{{ $p }}">{{ $p }}</a>
+          </li>
+        {{ end }}
       {{ end }}
     </ul>
 
