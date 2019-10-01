@@ -81,14 +81,14 @@
     are counting Pull Requests against these organizations or projects.
     </p>
 
-    <ul class="list-inline">
+    <ul class="list-group">
       {{ range $o, $i := .Orgs }}
-        <li class="list-inline-item">
-          <a class="dark" href="https://github.com/{{ $o }}">{{ $o }}</a>
+        <li class="list-group-item">
+          <a href="https://github.com/{{ $o }}">{{ $o }}</a>
         </li>
       {{ end }}
       {{ range $p, $i := .Projects }}
-        <li class="list-inline-item">
+        <li class="list-group-item">
           <a class="dark" href="https://github.com/{{ $p }}">{{ $p }}</a>
         </li>
       {{ end }}
