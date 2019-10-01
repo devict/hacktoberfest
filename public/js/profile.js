@@ -40,7 +40,6 @@ function loadIssues() {
         rows += "<tr>" +
           "<td> <a href='" + issue["URL"] + "'>" + issue["Title"] + "</a>" + tags + "</td>" +
           "<td>" + issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
-          "<td>" + issue["Languages"].join(", ") + "</td>" +
           "</tr>";
       })
       $("#issues").append(rows);
@@ -49,7 +48,7 @@ function loadIssues() {
       btn.hide();
     })
     .fail(function(err) {
-      console.log(err);
+      console.log(err)
       alert('Could not get issues!');
     });
 }
