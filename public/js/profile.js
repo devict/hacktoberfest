@@ -48,7 +48,8 @@ function loadIssues() {
       $('#issues_table').DataTable();
       btn.hide();
     })
-    .fail(function() {
+    .fail(function(err) {
+      console.log(err);
       alert('Could not get issues!');
     });
 }
