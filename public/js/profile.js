@@ -38,7 +38,7 @@ function loadIssues() {
         }
 
         rows += "<tr>" +
-          "<td> <a href='" + issue["URL"] + "'>" + issue["Title"] + "</a>" + tags + "</td>" +
+          "<td> <a class='dark' href='" + issue["URL"] + "'>" + issue["Title"] + "</a>" + tags + "</td>" +
           "<td>" + issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>";
 
         // some repos have no languages
