@@ -39,16 +39,21 @@ function loadIssues() {
 
         rows += "<tr>" +
           "<td> <a href='" + issue["URL"] + "'>" + issue["Title"] + "</a>" + tags + "</td>" +
-          "<td>" + issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>" +
-          "</tr>";
+          "<td>" + issue["Repo"]["Owner"] + "/" + issue["Repo"]["Name"] + "</td>";
+
+        // some repos have no languages
+        if (issue["Languages"] == null){
+            rows += "<td>None</td></tr>";
+        } else {
+            rows += "<td>" + issue["Languages"].join(", ") + "</td></tr>";
+        }
       })
       $("#issues").append(rows);
       $('#issues_table').show();
       $('#issues_table').DataTable();
       btn.hide();
     })
-    .fail(function(err) {
-      console.log(err)
+    .fail(function() {
       alert('Could not get issues!');
     });
 }
