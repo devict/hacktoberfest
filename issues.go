@@ -135,11 +135,15 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	req = req.WithContext(ctx)
 
 	q := fmt.Sprintf(`is:open type:issue label:"%s"`, label)
-	for k := range orgs {
-		q += " org:" + k
+	for k, v := range orgs {
+		if v == true {
+			q += " org:" + k
+		}
 	}
-	for k := range projects {
-		q += " repo:" + k
+	for k, v := range projects {
+		if v == true {
+			q += " repo:" + k
+		}
 	}
 
 	vals := req.URL.Query()
