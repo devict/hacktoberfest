@@ -87,11 +87,11 @@ function checkPRs() {
       } else if (validCount === 0) {
         // Some PRs but none count
         message = 'You have ' + data.length + ' Pull Request(s) but none of them are against approved repos.';
-      } else if (validCount < 4) {
+      } else if (validCount < 2) {
         // Some PRs that count but not quite 4
         message = 'Nice! You have ' + validCount + ' Pull Request(s) that count for Wichita Hacktoberfest. Keep it up!';
       } else {
-        // >= 4 valid PRs! Woohoo!
+        // >= 2 valid PRs! Woohoo!
         message = 'Excellent! You have hit the goal! Maybe hop in the devICT Slack and help others hit their goal too!';
       }
 
