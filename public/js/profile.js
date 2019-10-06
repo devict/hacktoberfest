@@ -85,10 +85,10 @@ function checkPRs() {
         // No PRs
         message = 'You have not opened any Pull Requests on public GitHub projects during October 2019.';
       } else if (validCount === 0) {
-        // Some PRs but none count
+        // Some PRs but none counts
         message = 'You have ' + data.length + ' Pull Request(s) but none of them are against approved repos.';
       } else if (validCount < 2) {
-        // Some PRs that count but not quite 4
+        // Some PRs that count but not quite 2
         message = 'Nice! You have ' + validCount + ' Pull Request(s) that count for Wichita Hacktoberfest. Keep it up!';
       } else {
         // >= 2 valid PRs! Woohoo!
