@@ -74,7 +74,7 @@ function checkPRs() {
         var t = $('#pr-template-' + (p.Valid ? 'valid' : 'invalid') + ' div').clone();
 
         t.find('.title').text(p.Title);
-        t.find('.date').text(Date(p.Date));
+        t.find('.date').text(new Date(p.Date));
         t.find('.repo').text(p.Repo.Owner + '/' + p.Repo.Name);
 
         results.prepend(t);
