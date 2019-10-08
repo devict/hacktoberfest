@@ -36,6 +36,8 @@ var projects = map[string]bool{
 	"blunket/image-checker":     true,
 	"hitjim/ting-bill-split":    true,
 	"nessalc/food-groups":       true,
+	"doby162/witchazzan-server": true,
+	"chrisl8/witchazzan-client": true,
 }
 
 var v = render.New(render.Options{
