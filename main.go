@@ -25,6 +25,7 @@ var orgs = map[string]bool{
 	"StartupWichita": true,
 	"wichitalks":     false,
 	"ennovar":        false,
+	"lake-afton-public-observatory": true,
 }
 
 // These specific projects also count
