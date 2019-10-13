@@ -19,12 +19,12 @@ import (
 
 // Any project under one of these organizations counts
 var orgs = map[string]bool{
-	"devict":         true,
-	"makeict":        true,
-	"openwichita":    false,
-	"StartupWichita": true,
-	"wichitalks":     false,
-	"ennovar":        false,
+	"devict":                        true,
+	"makeict":                       true,
+	"openwichita":                   false,
+	"StartupWichita":                true,
+	"wichitalks":                    false,
+	"ennovar":                       false,
 	"lake-afton-public-observatory": true,
 }
 
