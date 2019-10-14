@@ -34,7 +34,6 @@ var projects = map[string]bool{
 	"br0xen/boltbrowser":           true,
 	"benblankley/fort-rpg":         true,
 	"chrisl8/ArloBot":              true,
-	"blunket/image-checker":        true,
 	"hitjim/ting-bill-split":       true,
 	"nessalc/food-groups":          true,
 	"kentonh/ProjectNameGenerator": true,
