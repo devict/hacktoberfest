@@ -22,7 +22,7 @@ Create an application from your
 **Homepage URL** to `http://localhost:8080` and **Authorization callback URL**
 to `http://localhost:8080/auth/github`.
 
-Copy the `secret.env.example` files and rename it to `secret.env`:
+Copy the `secret.env.example` file and rename it to `secret.env`:
 
 ```
 cp secret.env.example secret.env
