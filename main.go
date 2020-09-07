@@ -111,9 +111,11 @@ func home(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Orgs     map[string]bool
 		Projects map[string]bool
+		Year     int
 	}{
 		Orgs:     orgs,
 		Projects: projects,
+		Year: time.Now().Year(),
 	}
 	v.HTML(w, http.StatusOK, "home", data)
 }
