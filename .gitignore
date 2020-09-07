@@ -1,2 +1,4 @@
 hacktoberfest
 secret.env
+node_modules
+public/css
