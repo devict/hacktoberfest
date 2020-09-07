@@ -68,6 +68,8 @@ press <kbd>ctrl</kbd> + <kbd>c</kbd> to cancel the process and then run
 
 Running `npm run watch` will watch for frontend changes and rebuild CSS assets.
 
+This website uses the Typicons icon library. [Download the SVG files from their website](https://www.s-ings.com/typicons/).
+
 ## Credit
 
 The entire idea and name "Hacktoberfest" comes from the
