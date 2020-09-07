@@ -23,7 +23,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	info := struct {
 		Orgs     map[string]bool
-		Projects map[string]bool
+		Projects map[string]Project
 		User     goth.User
 		New      bool
 		Year     int

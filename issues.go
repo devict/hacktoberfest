@@ -140,8 +140,8 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 			q += " org:" + k
 		}
 	}
-	for k, v := range projects {
-		if v == true {
+	for k, p := range projects {
+		if p.Visible == true {
 			q += " repo:" + k
 		}
 	}
