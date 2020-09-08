@@ -1,0 +1,49 @@
+# github.com/golang/protobuf v0.0.0-20170920220647-130e6b02ab05
+## explicit
+github.com/golang/protobuf/proto
+# github.com/gorilla/context v1.1.1
+github.com/gorilla/context
+# github.com/gorilla/mux v1.6.2
+github.com/gorilla/mux
+# github.com/gorilla/pat v0.0.0-20180118222023-199c85a7f6d1
+## explicit
+github.com/gorilla/pat
+# github.com/gorilla/securecookie v1.1.1
+github.com/gorilla/securecookie
+# github.com/gorilla/sessions v1.1.1
+## explicit
+github.com/gorilla/sessions
+# github.com/lib/pq v0.0.0-20170922172634-b77235e3890a
+## explicit
+github.com/lib/pq
+github.com/lib/pq/oid
+# github.com/markbates/goth v1.64.2
+## explicit
+github.com/markbates/goth
+github.com/markbates/goth/gothic
+github.com/markbates/goth/providers/github
+# github.com/peterhellberg/link v1.0.0
+## explicit
+github.com/peterhellberg/link
+# github.com/pkg/errors v0.8.0
+## explicit
+github.com/pkg/errors
+# github.com/unrolled/render v0.0.0-20170714214854-a0ec58421ddf
+## explicit
+github.com/unrolled/render
+# golang.org/x/net v0.0.0-20170927055102-0a9397675ba3
+## explicit
+golang.org/x/net/context
+golang.org/x/net/context/ctxhttp
+# golang.org/x/oauth2 v0.0.0-20180620175406-ef147856a6dd
+golang.org/x/oauth2
+golang.org/x/oauth2/internal
+# google.golang.org/appengine v1.0.0
+## explicit
+google.golang.org/appengine/internal
+google.golang.org/appengine/internal/base
+google.golang.org/appengine/internal/datastore
+google.golang.org/appengine/internal/log
+google.golang.org/appengine/internal/remote_api
+google.golang.org/appengine/internal/urlfetch
+google.golang.org/appengine/urlfetch
