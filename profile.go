@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/markbates/goth"
 )
@@ -22,14 +23,16 @@ func profile(w http.ResponseWriter, r *http.Request) {
 
 	info := struct {
 		Orgs     map[string]bool
-		Projects map[string]bool
+		Projects map[string]Project
 		User     goth.User
 		New      bool
+		Year     int
 	}{
 		Orgs:     orgs,
 		Projects: projects,
 		User:     u,
 		New:      n,
+		Year: time.Now().Year(),
 	}
 
 	v.HTML(w, http.StatusOK, "profile", info)

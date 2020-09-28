@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-white antialiased text-gray-700">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,40 +7,34 @@
 
     <meta name="description" content="Submit two pull requests to qualifying Wichita projects during the month of October and receive cool stickers!">
     <meta name="keywords" content="devICT, Wichita, Hacktoberfest">
-    
+
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content="Wichita Hacktoberfest 2019!"/>
+    <meta property="og:title" content="Wichita Hacktoberfest {{ .Year }}!"/>
     <meta property="og:url" content="https://devict-hacktoberfest.herokuapp.com/"/>
     <meta property="og:description" content="Submit two pull requests to qualifying Wichita projects during the month of October and receive cool stickers!"/>
-    <meta property="og:image" content="https://devict-hacktoberfest.herokuapp.com/public/images/hacktoberfest-logo-social-media.jpg"/>
+    <meta property="og:image" content="https://devict-hacktoberfest.herokuapp.com/public/images/social.png"/>
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@dev_ict">
-    <meta name="twitter:title" content="Wichita Hacktoberfest 2019!">
+    <meta name="twitter:title" content="devICT Hacktoberfest {{ .Year }}!">
     <meta name="twitter:description" content="Submit two pull requests to qualifying Wichita projects during the month of October and receive cool stickers!">
-    <meta name="twitter:image" content="https://devict-hacktoberfest.herokuapp.com/public/images/hacktoberfest-logo-social-media.jpg">
+    <meta name="twitter:image" content="https://devict-hacktoberfest.herokuapp.com/public/images/social.png">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/public/images/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/public/images/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/public/images/icons/favicon-16x16.png">
-    <link rel="manifest" href="/public/images/icons/manifest.json">
-    <link rel="mask-icon" href="/public/images/icons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="manifest" href="/public/images/icons/site.webmanifest">
     <link rel="shortcut icon" href="/public/images/icons/favicon.ico">
-    <meta name="msapplication-config" content="/public/images/icons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="mask-icon" href="/public/images/icons/safari-pinned-tab.svg" color="#F7941E">
 
-    <title>Wichita Hacktoberfest 2019!</title>
-
-    <!-- Bootstrap and Font Awesome CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" rel="stylesheet" >
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" rel="stylesheet">
+    <title>devICT Hacktoberfest {{ .Year }}</title>
 
     <!-- Custom CSS -->
-    <link href="/public/css/hacktoberfest.css" rel="stylesheet">
+    <link href="/public/css/app.css" rel="stylesheet">
 
     <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Germania+One&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
     {{ partial "css" }}
   </head>
@@ -49,8 +43,6 @@
 
     <!-- Core JavaScript. jQuery, Bootstrap, and Popper -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.js"></script>
@@ -60,4 +52,3 @@
     {{ partial "js" }}
   </body>
 </html>
-

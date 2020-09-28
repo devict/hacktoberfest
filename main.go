@@ -25,21 +25,67 @@ var orgs = map[string]bool{
 	"StartupWichita":                true,
 	"wichitalks":                    false,
 	"ennovar":                       false,
-	"lake-afton-public-observatory": true,
+	"lake-afton-public-observatory": false,
+}
+
+type Project struct {
+	Title       string
+	Description string
+	Visible     bool
 }
 
 // These specific projects also count
-var projects = map[string]bool{
-	"imacrayon/eventsinwichita": true,
-	"br0xen/boltbrowser":        true,
-	"benblankley/fort-rpg":      true,
-	"chrisl8/ArloBot":           true,
-	"blunket/image-checker":     true,
-	"hitjim/ting-bill-split":    true,
-	"nessalc/food-groups":       true,
-	"kentonh/ProjectNameGenerator": true,
-	"doby162/witchazzan-server": true,
-	"chrisl8/witchazzan-client": true,
+var projects = map[string]Project{
+	"imacrayon/eventsinwichita": Project{
+		Title: "Events in Wichita",
+		Description: "",
+		Visible: false,
+	},
+	"br0xen/boltbrowser": Project{
+		Title: "Bolt Browser",
+		Description: "A CLI Browser for BoltDB Files.",
+		Visible: true,
+	},
+	"benblankley/fort-rpg": Project{
+		Title: "fort-rpg",
+		Description: "A text-based Computer Role Playing Game written in Fortran 90.",
+		Visible: true,
+	},
+	"chrisl8/ArloBot": Project{
+		Title: "ArloBot",
+		Description: "Robot Operating System (ROS) for a Parallax ArloBot.",
+		Visible: true,
+	},
+	"blunket/image-checker": Project{
+		Title: "Image Checker",
+		Description: "This is a web app to aid in checking image sizes and stuff.",
+		Visible: true,
+	},
+	"hitjim/ting-bill-split": Project{
+		Title: "Ting Bill Split",
+		Description: "Split the cost your group's Ting bill proportionately, based on each device's usage.",
+		Visible: true,
+	},
+	"nessalc/food-groups": Project{
+		Title: "Food Groups",
+		Description: "An app to coordinate groups of people gathering for meals.",
+		Visible: true,
+	},
+	"kentonh/ProjectNameGenerator": Project{
+		Title: "Project Name Generator",
+		Description: "Really stupid way to give your project a code name.",
+		Visible: true,
+	},
+	"doby162/witchazzan-server": Project{
+		Title: "Witchazzan (Server)",
+		Description: "The Clojure server for the online game Witchazzan.",
+		Visible: true,
+	},
+	"chrisl8/witchazzan-client": Project{
+		Title: "Witchazzan (Client)",
+		Description: "The Node JS client for the online game Witchazzan.",
+		Visible: true,
+	},
 }
 
 var v = render.New(render.Options{
@@ -110,10 +156,12 @@ func logger(h http.Handler) http.Handler {
 func home(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Orgs     map[string]bool
-		Projects map[string]bool
+		Projects map[string]Project
+		Year     int
 	}{
 		Orgs:     orgs,
 		Projects: projects,
+		Year: time.Now().Year(),
 	}
 	v.HTML(w, http.StatusOK, "home", data)
 }

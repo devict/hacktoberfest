@@ -43,6 +43,18 @@ Start the web service:
 docker-compose up --build web
 ```
 
+Install frontend assets:
+
+```
+npm install
+```
+
+Build the frontend assets:
+
+```
+npm run production
+```
+
 You're ready to go! Visit [http://localhost:8080](localhost:8080) in your
 browser.
 
@@ -53,6 +65,10 @@ Using the configured Docker Compose file if you edit anything under `public/` or
 `.go` files you will have to rebuild the image. While the web service is running
 press <kbd>ctrl</kbd> + <kbd>c</kbd> to cancel the process and then run
 `docker-compose up --build web` again to restart.
+
+Running `npm run watch` will watch for frontend changes and rebuild CSS assets.
+
+This website uses the Typicons icon library. [Download the SVG files from their website](https://www.s-ings.com/typicons/).
 
 ## Credit
 
