@@ -16,13 +16,12 @@ import (
 	"github.com/unrolled/render"
 )
 
-
 // Any project under one of these organizations counts
 var orgs = map[string]bool{
 	"devict":                        true,
 	"makeict":                       true,
 	"openwichita":                   false,
-	"StartupWichita":                true,
+	"StartupWichita":                false,
 	"wichitalks":                    false,
 	"ennovar":                       false,
 	"lake-afton-public-observatory": false,
@@ -36,55 +35,60 @@ type Project struct {
 
 // These specific projects also count
 var projects = map[string]Project{
-	"imacrayon/eventsinwichita": Project{
-		Title: "Events in Wichita",
+	"imacrayon/eventsinwichita": {
+		Title:       "Events in Wichita",
 		Description: "",
-		Visible: false,
+		Visible:     false,
 	},
-	"br0xen/boltbrowser": Project{
-		Title: "Bolt Browser",
+	"br0xen/boltbrowser": {
+		Title:       "Bolt Browser",
 		Description: "A CLI Browser for BoltDB Files.",
-		Visible: true,
+		Visible:     true,
 	},
-	"benblankley/fort-rpg": Project{
-		Title: "fort-rpg",
+	"benblankley/fort-rpg": {
+		Title:       "fort-rpg",
 		Description: "A text-based Computer Role Playing Game written in Fortran 90.",
-		Visible: true,
+		Visible:     true,
 	},
-	"chrisl8/ArloBot": Project{
-		Title: "ArloBot",
+	"chrisl8/ArloBot": {
+		Title:       "ArloBot",
 		Description: "Robot Operating System (ROS) for a Parallax ArloBot.",
-		Visible: true,
+		Visible:     true,
 	},
-	"blunket/image-checker": Project{
-		Title: "Image Checker",
+	"blunket/image-checker": {
+		Title:       "Image Checker",
 		Description: "This is a web app to aid in checking image sizes and stuff.",
-		Visible: true,
+		Visible:     true,
 	},
-	"hitjim/ting-bill-split": Project{
-		Title: "Ting Bill Split",
+	"hitjim/ting-bill-split": {
+		Title:       "Ting Bill Split",
 		Description: "Split the cost your group's Ting bill proportionately, based on each device's usage.",
-		Visible: true,
+		Visible:     true,
 	},
-	"nessalc/food-groups": Project{
-		Title: "Food Groups",
+	"nessalc/food-groups": {
+		Title:       "Food Groups",
 		Description: "An app to coordinate groups of people gathering for meals.",
-		Visible: true,
+		Visible:     true,
 	},
-	"kentonh/ProjectNameGenerator": Project{
-		Title: "Project Name Generator",
+	"kentonh/ProjectNameGenerator": {
+		Title:       "Project Name Generator",
 		Description: "Really stupid way to give your project a code name.",
-		Visible: true,
+		Visible:     true,
 	},
-	"doby162/witchazzan-server": Project{
-		Title: "Witchazzan (Server)",
+	"doby162/witchazzan-server": {
+		Title:       "Witchazzan (Server)",
 		Description: "The Clojure server for the online game Witchazzan.",
-		Visible: true,
+		Visible:     true,
 	},
-	"chrisl8/witchazzan-client": Project{
-		Title: "Witchazzan (Client)",
+	"chrisl8/witchazzan-client": {
+		Title:       "Witchazzan (Client)",
 		Description: "The Node JS client for the online game Witchazzan.",
-		Visible: true,
+		Visible:     true,
+	},
+	"sethetter/reqq": {
+		Title:       "reqq",
+		Description: "A rust CLI for making predefined HTTP requests.",
+		Visible:     true,
 	},
 }
 
@@ -161,7 +165,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}{
 		Orgs:     orgs,
 		Projects: projects,
-		Year: time.Now().Year(),
+		Year:     time.Now().Year(),
 	}
 	v.HTML(w, http.StatusOK, "home", data)
 }
