@@ -4,7 +4,7 @@
   "description": "devICT Hacktoberfest",
   "scripts": {
     "watch": "postcss resources/css/app.css --watch --output=public/css/app.css",
-    "production": "postcss resources/css/app.css --env=production --output=public/css/app.css"
+    "build": "postcss resources/css/app.css --env=production --output=public/css/app.css"
   },
   "dependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
