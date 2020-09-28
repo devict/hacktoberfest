@@ -58,6 +58,11 @@ var projects = map[string]Project{
 	"blunket/image-checker": {
 		Title:       "Image Checker",
 		Description: "This is a web app to aid in checking image sizes and stuff.",
+		Visible:     false,
+	},
+	"blunket/camelot": {
+		Title:       "Camelot",
+		Description: "The 2-player strategy board game, Camelot! (a.k.a. Inside Moves)",
 		Visible:     true,
 	},
 	"hitjim/ting-bill-split": {
