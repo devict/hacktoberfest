@@ -43,7 +43,7 @@ var projects = map[string]Project{
 	"br0xen/boltbrowser": {
 		Title:       "Bolt Browser",
 		Description: "A CLI Browser for BoltDB Files.",
-		Visible:     true,
+		Visible:     false,
 	},
 	"benblankley/fort-rpg": {
 		Title:       "fort-rpg",
@@ -83,12 +83,12 @@ var projects = map[string]Project{
 	"doby162/witchazzan-server": {
 		Title:       "Witchazzan (Server)",
 		Description: "The Clojure server for the online game Witchazzan.",
-		Visible:     true,
+		Visible:     false,
 	},
 	"chrisl8/witchazzan-client": {
 		Title:       "Witchazzan (Client)",
 		Description: "The Node JS client for the online game Witchazzan.",
-		Visible:     true,
+		Visible:     false,
 	},
 	"sethetter/reqq": {
 		Title:       "reqq",
