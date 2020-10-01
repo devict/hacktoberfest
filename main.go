@@ -95,6 +95,11 @@ var projects = map[string]Project{
 		Description: "A rust CLI for making predefined HTTP requests.",
 		Visible:     true,
 	},
+	"imacrayon/whatthetofu": {
+		Title:       "What the Tofu",
+		Description: "Find vegan food in Wichita.",
+		Visible:     true,
+	},
 }
 
 var v = render.New(render.Options{
