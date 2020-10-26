@@ -1,4 +1,4 @@
-# github.com/golang/protobuf v0.0.0-20170920220647-130e6b02ab05
+# github.com/golang/protobuf v1.4.3
 ## explicit
 github.com/golang/protobuf/proto
 # github.com/gorilla/context v1.1.1
@@ -17,7 +17,7 @@ github.com/gorilla/sessions
 ## explicit
 github.com/lib/pq
 github.com/lib/pq/oid
-# github.com/markbates/goth v1.64.2
+# github.com/markbates/goth v1.65.0
 ## explicit
 github.com/markbates/goth
 github.com/markbates/goth/gothic
@@ -25,20 +25,20 @@ github.com/markbates/goth/providers/github
 # github.com/peterhellberg/link v1.0.0
 ## explicit
 github.com/peterhellberg/link
-# github.com/pkg/errors v0.8.0
+# github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
 # github.com/unrolled/render v0.0.0-20170714214854-a0ec58421ddf
 ## explicit
 github.com/unrolled/render
-# golang.org/x/net v0.0.0-20170927055102-0a9397675ba3
+# golang.org/x/net v0.0.0-20201024042810-be3efd7ff127
 ## explicit
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp
-# golang.org/x/oauth2 v0.0.0-20180620175406-ef147856a6dd
+# golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43
 golang.org/x/oauth2
 golang.org/x/oauth2/internal
-# google.golang.org/appengine v1.0.0
+# google.golang.org/appengine v1.6.7
 ## explicit
 google.golang.org/appengine/internal
 google.golang.org/appengine/internal/base
@@ -47,3 +47,30 @@ google.golang.org/appengine/internal/log
 google.golang.org/appengine/internal/remote_api
 google.golang.org/appengine/internal/urlfetch
 google.golang.org/appengine/urlfetch
+# google.golang.org/protobuf v1.25.0
+google.golang.org/protobuf/encoding/prototext
+google.golang.org/protobuf/encoding/protowire
+google.golang.org/protobuf/internal/descfmt
+google.golang.org/protobuf/internal/descopts
+google.golang.org/protobuf/internal/detrand
+google.golang.org/protobuf/internal/encoding/defval
+google.golang.org/protobuf/internal/encoding/messageset
+google.golang.org/protobuf/internal/encoding/tag
+google.golang.org/protobuf/internal/encoding/text
+google.golang.org/protobuf/internal/errors
+google.golang.org/protobuf/internal/fieldsort
+google.golang.org/protobuf/internal/filedesc
+google.golang.org/protobuf/internal/filetype
+google.golang.org/protobuf/internal/flags
+google.golang.org/protobuf/internal/genid
+google.golang.org/protobuf/internal/impl
+google.golang.org/protobuf/internal/mapsort
+google.golang.org/protobuf/internal/pragma
+google.golang.org/protobuf/internal/set
+google.golang.org/protobuf/internal/strs
+google.golang.org/protobuf/internal/version
+google.golang.org/protobuf/proto
+google.golang.org/protobuf/reflect/protoreflect
+google.golang.org/protobuf/reflect/protoregistry
+google.golang.org/protobuf/runtime/protoiface
+google.golang.org/protobuf/runtime/protoimpl
