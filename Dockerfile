@@ -1,4 +1,4 @@
-FROM golang:1.9-alpine
+FROM golang:1.18-alpine
 
 RUN mkdir -p /go/src/github.com/devict/hacktoberfest
 WORKDIR /go/src/github.com/devict/hacktoberfest
