@@ -4,7 +4,7 @@ A little web app for tracking participation in the devICT Hacktoberfest event.
 
 ## Participate
 
-Make Wichita a better place through code. Hop on over to the
+Make Wichita a better place through code. Hop on to the
 [devICT Hacktoberfest app](https://devict-hacktoberfest.herokuapp.com) and
 register with your GitHub profile.
 
