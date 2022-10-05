@@ -68,7 +68,7 @@ var projects = map[string]Project{
 	"hitjim/ting-bill-split": {
 		Title:       "Ting Bill Split",
 		Description: "Split the cost your group's Ting bill proportionately, based on each device's usage.",
-		Visible:     true,
+		Visible:     false,
 	},
 	"nessalc/food-groups": {
 		Title:       "Food Groups",
