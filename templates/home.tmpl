@@ -23,7 +23,7 @@
           </div>
         -->
         <div class="prose prose-xl text-gray-500">
-          <p class="text">This is a blatant attempt to piggyback off the popularity of the global <a class="dark" href="https://hacktoberfest.digitalocean.com">Hacktoberfest event</a> from Digital Ocean and GitHub. Submit two pull requests to qualifying Wichita projects during the month of October and receive stickers from us!</p>
+          <p class="text">This is a blatant attempt to piggyback off the popularity of the global <a class="dark" href="https://hacktoberfest.digitalocean.com">Hacktoberfest event</a> from Digital Ocean and GitHub. Submit {{ .Config.RequiredPullRequestCountEng }} to qualifying Wichita projects during the month of October and receive stickers from us!</p>
         </div>
         <div class="mb-1 sm:flex sm:justify-center md:justify-start">
           <div class="rounded-md shadow">
@@ -110,7 +110,7 @@
           <div class="mt-5">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Submit a PR</h3>
             <p class="mt-2 text-base leading-6 text-gray-500">
-              Submit a pull request with your proposed change. Repeat 1 more time.
+              Submit a pull request with your proposed change. {{ .Config.TimesToRepeat }}
             </p>
           </div>
         </li>
@@ -122,7 +122,7 @@
           <div class="mt-5">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Enjoy Your Stickers!</h3>
             <p class="mt-2 text-base leading-6 text-gray-500">
-              After two pull requests, you are eligible to receive a fun set of  stickers!
+              After {{ .Config.RequiredPullRequestCountEng }}, you are eligible to receive a fun set of  stickers!
             </p>
           </div>
         </li>

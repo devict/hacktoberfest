@@ -33,6 +33,18 @@ type Project struct {
 	Visible     bool
 }
 
+type HacktoberfestConfiguration struct {
+	RequiredPullRequestCount    int
+	RequiredPullRequestCountEng string
+	TimesToRepeat               string
+}
+
+var hacktoberfestOptions = HacktoberfestConfiguration{
+	RequiredPullRequestCount:    2,                      // the number of pull requests required to qualify for this year.
+	RequiredPullRequestCountEng: "two pull requests",    // the required number written out fully
+	TimesToRepeat:               "Repeat 1 more times.", // the value in this sentence should be one less than the required count.
+}
+
 // These specific projects also count
 var projects = map[string]Project{
 	"imacrayon/eventsinwichita": {
@@ -172,10 +184,12 @@ func home(w http.ResponseWriter, r *http.Request) {
 		Orgs     map[string]bool
 		Projects map[string]Project
 		Year     int
+		Config   HacktoberfestConfiguration
 	}{
 		Orgs:     orgs,
 		Projects: projects,
 		Year:     time.Now().Year(),
+		Config:   hacktoberfestOptions,
 	}
 	v.HTML(w, http.StatusOK, "home", data)
 }
