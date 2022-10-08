@@ -59,8 +59,6 @@ function checkPRs() {
 
   $.ajax({type: 'GET', url: '/api/prs'})
     .then(function(data) {
-      var requiredPullRequestsCount = $('#required-pull-requests-count').val();
-      console.log("requiredPullRequestsCount: ", requiredPullRequestsCount);
       var validCount = 0;
       results.empty()
       data.forEach(function(p, i) {
@@ -75,6 +73,7 @@ function checkPRs() {
         results.prepend(t);
       });
 
+      var requiredPullRequestsCount = $('#required-pull-requests-count').val();
       var message;
       if (data.length === 0) {
         // No PRs
