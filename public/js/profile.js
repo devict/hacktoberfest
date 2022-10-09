@@ -73,10 +73,11 @@ function checkPRs() {
         results.prepend(t);
       });
 
+      var today = new Date();
       var message;
       if (data.length === 0) {
         // No PRs
-        message = 'You have not opened any Pull Requests on public GitHub projects during October 2019.';
+        message = 'You have not opened any Pull Requests on public GitHub projects during October ' + today.getFullYear() + '.';
       } else if (validCount === 0) {
         // Some PRs but none counts
         message = 'You have ' + data.length + ' Pull Request(s) but none of them are against approved repos.';
