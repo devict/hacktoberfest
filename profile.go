@@ -26,13 +26,15 @@ func profile(w http.ResponseWriter, r *http.Request) {
 		Projects map[string]Project
 		User     goth.User
 		New      bool
+		Config   HacktoberfestConfiguration
 		Year     int
 	}{
 		Orgs:     orgs,
 		Projects: projects,
 		User:     u,
 		New:      n,
-		Year: time.Now().Year(),
+		Config:   hacktoberfestOptions,
+		Year:     time.Now().Year(),
 	}
 
 	v.HTML(w, http.StatusOK, "profile", info)

@@ -31,6 +31,9 @@ cp secret.env.example secret.env
 Paste the **Client ID** and **Client Secret** from your registered GitHub
 application into `secret.env`.
 
+
+(If on Windows) Make sure your local repository path (for example `C:\Users\username\repos\job-board`) is available for Docker Filesharing by going to `Docker Dashboard > Settings > Resources > File Sharing`
+
 Start the database in daemon mode:
 
 ```
@@ -52,7 +55,7 @@ npm install
 Build the frontend assets:
 
 ```
-npm run production
+npm run build
 ```
 
 You're ready to go! Visit [http://localhost:8080](localhost:8080) in your

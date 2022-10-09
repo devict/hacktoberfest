@@ -73,6 +73,7 @@ function checkPRs() {
         results.prepend(t);
       });
 
+      var requiredPullRequestsCount = $('#required-pull-requests-count').val();
       var today = new Date();
       var message;
       if (data.length === 0) {
@@ -80,12 +81,15 @@ function checkPRs() {
         message = 'You have not opened any Pull Requests on public GitHub projects during October ' + today.getFullYear() + '.';
       } else if (validCount === 0) {
         // Some PRs but none counts
-        message = 'You have ' + data.length + ' Pull Request(s) but none of them are against approved repos.';
-      } else if (validCount < 2) {
+        var pullRequestsString = data.length == 1 ? 'Pull Request' : 'Pull Requests'
+        message = 'You have ' + data.length + ' ' + pullRequestsString + ' but none of them are against approved repos.';
+      } else if (validCount < requiredPullRequestsCount) {
         // Some PRs that count but not quite 2
-        message = 'Nice! You have ' + validCount + ' Pull Request(s) that count for devICT Hacktoberfest. Keep it up!';
+        var pullRequestsString = validCount == 1 ? 'Pull Request' : 'Pull Requests'
+        var countsString = validCount == 1 ? 'counts' : 'count' // grammar agreement with singular or plural subject
+        message = 'Nice! You have <b>' + validCount + ' ' + pullRequestsString + '</b> that ' + countsString + ' for devICT Hacktoberfest. Keep it up!';
       } else {
-        // >= 2 valid PRs! Woohoo!
+        // >= 'requiredPullRequestsCount' valid PRs! Woohoo!
         message = 'Excellent! You have hit the goal! Maybe hop in the devICT Slack and help others hit their goal too!';
       }
 
