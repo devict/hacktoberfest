@@ -53,7 +53,7 @@ func check() error {
 			}
 		}
 		var result string
-		if valid >= 4 {
+		if valid >= hacktoberfestOptions.RequiredPullRequestCount {
 			succesful++
 			result = "✔"
 		} else {
