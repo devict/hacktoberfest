@@ -1,10 +1,10 @@
-name: Check and Deploy
+name: Deploy
 on:
   push:
     branches: ["main"]
 jobs:
   deploy:
-    name: Check and Deploy
+    name: Deploy
     runs-on: ubuntu-latest
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
