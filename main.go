@@ -112,6 +112,11 @@ var projects = map[string]Project{
 		Description: "Find vegan food in Wichita.",
 		Visible:     true,
 	},
+	"imacrayon/alpine-ajax": {
+		Title:       "Alpine AJAX",
+		Description: "An Alpine.js plugin for building AJAX-powered frontends.",
+		Visible:     true,
+	},
 }
 
 var v = render.New(render.Options{
