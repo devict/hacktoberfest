@@ -42,13 +42,15 @@ func prs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+var CurrentYear = "2023"
+
 func fetchPRs(usernames []string, token string) ([]PR, error) {
 	req, err := http.NewRequest("GET", "https://api.github.com/search/issues", nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not build request")
 	}
 
-	q := "type:pr created:2022-10-01T00:00:00-12:00..2022-10-31T23:59:59-12:00"
+	q := fmt.Sprintf("type:pr created:%s-10-01T00:00:00-12:00..%s-10-31T23:59:59-12:00", CurrentYear, CurrentYear)
 	for _, u := range usernames {
 		q = fmt.Sprintf("%s author:%s", q, u)
 	}
