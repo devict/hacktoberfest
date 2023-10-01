@@ -2,17 +2,9 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
-  experimental: {
-    uniformColorPalette: true,
-    defaultLineHeights: true,
-    extendedFontSizeScale: true,
-  },
-  purge: [
+  content: [
     './templates/**/*.tmpl',
+    './public/js/**/*.js',
   ],
   theme: {
     typography: (theme) => ({
@@ -57,45 +49,10 @@ module.exports = {
         'sans': ['Montserrat', ...defaultTheme.fontFamily.sans],
         'display': ['Germania\\ One', 'cursive'],
       },
-      fontSize: {
-        '10xl': '10rem',
-      },
-      height: {
-        '3': '.7rem',
-        '1/3': '33.333%',
-        '1/2': '50%',
-      },
-      maxHeight: {
-        '10': '2.5rem',
-      },
     },
-  },
-  variants: {
-    textColor: ({ before }) => before(['group-hover'], 'hover'),
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/custom-forms'),
-    plugin(function({ addComponents, theme }) {
-      addComponents({
-        '.paging_simple_numbers': {
-          borderRadius: theme('borderRadius.default'),
-          overflow: 'hidden',
-          border: `1px solid ${theme('colors.gray.200')}`,
-          borderRight: 'none',
-          display: 'inline-flex',
-          '& > span': {
-            display: 'flex',
-          },
-          '& a': {
-            display: 'block',
-            padding: '.5rem .75rem',
-            margin: '-1px 0 -1px -1px',
-            cursor: 'pointer',
-            border: `1px solid ${theme('colors.gray.200')}`,
-          },
-        },
-      })
-    })
+    require('@tailwindcss/forms'),
   ],
 }
