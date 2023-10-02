@@ -62,11 +62,6 @@ var projects = map[string]Project{
 		Description: "A text-based Computer Role Playing Game written in Fortran 90.",
 		Visible:     true,
 	},
-	"chrisl8/ArloBot": {
-		Title:       "ArloBot",
-		Description: "Robot Operating System (ROS) for a Parallax ArloBot.",
-		Visible:     true,
-	},
 	"blunket/image-checker": {
 		Title:       "Image Checker",
 		Description: "This is a web app to aid in checking image sizes and stuff.",
@@ -92,19 +87,14 @@ var projects = map[string]Project{
 		Description: "Really stupid way to give your project a code name.",
 		Visible:     true,
 	},
-	"doby162/witchazzan-server": {
-		Title:       "Witchazzan (Server)",
-		Description: "The Clojure server for the online game Witchazzan.",
-		Visible:     false,
-	},
-	"chrisl8/witchazzan-client": {
-		Title:       "Witchazzan (Client)",
-		Description: "The Node JS client for the online game Witchazzan.",
-		Visible:     false,
-	},
 	"sethetter/reqq": {
 		Title:       "reqq",
 		Description: "A rust CLI for making predefined HTTP requests.",
+		Visible:     true,
+	},
+	"sethetter/linktrap": {
+		Title:       "linktrap",
+		Description: "Text a link to a twilio-number, get back an archived and unpaywalled version.",
 		Visible:     true,
 	},
 	"imacrayon/whatthetofu": {
