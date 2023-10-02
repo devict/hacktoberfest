@@ -24,7 +24,7 @@ var orgs = map[string]bool{
 	"StartupWichita":                false,
 	"wichitalks":                    false,
 	"ennovar":                       false,
-	"lake-afton-public-observatory": false,
+	"lake-afton-public-observatory": true,
 }
 
 type Project struct {
@@ -65,11 +65,6 @@ var projects = map[string]Project{
 	"blunket/camelot": {
 		Title:       "Camelot",
 		Description: "The 2-player strategy board game, Camelot! (a.k.a. Inside Moves)",
-		Visible:     true,
-	},
-	"nessalc/food-groups": {
-		Title:       "Food Groups",
-		Description: "An app to coordinate groups of people gathering for meals.",
 		Visible:     true,
 	},
 	"kentonh/ProjectNameGenerator": {
