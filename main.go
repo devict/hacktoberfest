@@ -67,11 +67,6 @@ var projects = map[string]Project{
 		Description: "The 2-player strategy board game, Camelot! (a.k.a. Inside Moves)",
 		Visible:     true,
 	},
-	"hitjim/ting-bill-split": {
-		Title:       "Ting Bill Split",
-		Description: "Split the cost your group's Ting bill proportionately, based on each device's usage.",
-		Visible:     false,
-	},
 	"nessalc/food-groups": {
 		Title:       "Food Groups",
 		Description: "An app to coordinate groups of people gathering for meals.",
