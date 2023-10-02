@@ -62,11 +62,6 @@ var projects = map[string]Project{
 		Description: "A text-based Computer Role Playing Game written in Fortran 90.",
 		Visible:     true,
 	},
-	"blunket/image-checker": {
-		Title:       "Image Checker",
-		Description: "This is a web app to aid in checking image sizes and stuff.",
-		Visible:     false,
-	},
 	"blunket/camelot": {
 		Title:       "Camelot",
 		Description: "The 2-player strategy board game, Camelot! (a.k.a. Inside Moves)",
