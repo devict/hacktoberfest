@@ -92,6 +92,11 @@ var projects = map[string]Project{
 		Description: "An Alpine.js plugin for building AJAX-powered frontends.",
 		Visible:     true,
 	},
+	"imacrayon/snowbodyknows": {
+		Title:       "Snowbody Knows",
+		Description: "A secret santa wishlist builder .",
+		Visible:     true,
+	},
 }
 
 var v = render.New(render.Options{
