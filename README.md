@@ -37,13 +37,13 @@ application into `secret.env`.
 Start the database in daemon mode:
 
 ```
-docker-compose up -d db
+docker compose up -d db
 ```
 
 Start the web service:
 
 ```
-docker-compose up --build web
+docker compose up --build web
 ```
 
 Install frontend assets:
