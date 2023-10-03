@@ -1,5 +1,37 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+.paging_simple_numbers {
+  border-radius: theme('borderRadius.DEFAULT');
+  overflow: hidden;
+  border: 1px solid theme('colors.gray.200');
+  border-right: none;
+  display: inline-flex;
+}
+
+.paging_simple_numbers>span {
+  display: flex;
+}
+
+.paging_simple_numbers a {
+  display: block;
+  font-size: .875rem;
+  padding: .5rem .75rem;
+  margin: -1px 0 -1px -1px;
+  cursor: pointer;
+  border: 1px solid theme('colors.gray.200');
+}
+
+.dataTables_filter label {
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.dataTables_filter input {
+  display: block;
+  font-size: 1rem;
+  border-radius: theme('borderRadius.md');
+  box-shadow: theme('boxShadow.sm');
+  border: 1px solid theme('colors.gray.300');
+}
