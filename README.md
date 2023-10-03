@@ -58,7 +58,7 @@ Build the frontend assets:
 npm run build
 ```
 
-You're ready to go! Visit [http://localhost:8080](localhost:8080) in your
+You're ready to go! Visit [localhost:8080](http://localhost:8080) in your
 browser.
 
 ## Developing Locally
