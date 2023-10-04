@@ -16,6 +16,32 @@ import (
 	"github.com/unrolled/render"
 )
 
+type Organization struct {
+	Title     string
+	ImagePath string
+	Visible   bool
+}
+
+// Any project under one of these organizations counts
+var orgs = map[string]Organization{
+	"devict": {
+		Title:       "devICT",
+                ImagePath:    "public/images/logos/devict.svg",
+		Visible:     true,
+	},
+	"makeict": {
+		Title:       "makeICT",
+                ImagePath:    "public/images/logos/makeict.svg",
+		Visible:     true,
+	},
+	"lake-afton-public-observatory": {
+		Title:       "Lake Afton Public Observatory",
+                ImagePath:    "public/images/logos/lake-afton.png",
+		Visible:     true,
+	},
+}
+
+/*
 // Any project under one of these organizations counts
 var orgs = map[string]bool{
 	"devict":                        true,
@@ -26,6 +52,7 @@ var orgs = map[string]bool{
 	"ennovar":                       false,
 	"lake-afton-public-observatory": true,
 }
+*/
 
 type Project struct {
 	Title       string
@@ -166,7 +193,7 @@ func logger(h http.Handler) http.Handler {
 
 func home(w http.ResponseWriter, r *http.Request) {
 	data := struct {
-		Orgs     map[string]bool
+		Orgs     map[string]Organization
 		Projects map[string]Project
 		Year     int
 		Config   HacktoberfestConfiguration

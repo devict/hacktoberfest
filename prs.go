@@ -124,7 +124,7 @@ func fetchPRs(usernames []string, token string) ([]PR, error) {
 	}
 
 	for i, pr := range prs {
-		prs[i].Valid = orgs[pr.Repo.Owner] || projects[pr.Repo.Owner+"/"+pr.Repo.Name].Visible
+		prs[i].Valid = orgs[pr.Repo.Owner].Visible || projects[pr.Repo.Owner+"/"+pr.Repo.Name].Visible
 	}
 
 	return prs, nil

@@ -136,7 +136,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 
 	q := fmt.Sprintf(`is:open type:issue label:"%s"`, label)
 	for k, v := range orgs {
-		if v == true {
+		if v.Visible == true {
 			q += " org:" + k
 		}
 	}
