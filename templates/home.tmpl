@@ -146,11 +146,11 @@
     </div>
     <div class="mt-10">
       <ul data-sr-slide-up class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {{ range $p, $i := .Orgs }}
-          {{ if $i }}
+        {{ range $orgName, $org := .Orgs }}
+          {{ if $org.Visible }}
             <li class="col-span-1 bg-white rounded-lg shadow hover:shadow-md">
-              <a class="group block text-center w-full" href="https://github.com/{{ $p }}">
-                <div class="p-6"><img class="block mx-auto max-h-10" src="public/images/logos/{{ $p }}.svg" alt="{{ $p }}"></div>
+              <a class="group block text-center w-full" href="https://github.com/{{ $orgName }}">
+                <div class="p-6"><img class="block mx-auto max-h-10" src="{{ $org.ImagePath }}" alt="{{ $org.Title }}"></div>
                 <div class="border-t border-gray-200">
                   <div class="flex">
                     <div class="w-0 flex-1 flex">
