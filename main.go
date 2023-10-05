@@ -121,7 +121,7 @@ var projects = map[string]Project{
 	},
 	"imacrayon/snowbodyknows": {
 		Title:       "Snowbody Knows",
-		Description: "A secret santa wishlist builder .",
+		Description: "A secret santa wishlist builder.",
 		Visible:     true,
 	},
 }
