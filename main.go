@@ -41,19 +41,6 @@ var orgs = map[string]Organization{
 	},
 }
 
-/*
-// Any project under one of these organizations counts
-var orgs = map[string]bool{
-	"devict":                        true,
-	"makeict":                       true,
-	"openwichita":                   false,
-	"StartupWichita":                false,
-	"wichitalks":                    false,
-	"ennovar":                       false,
-	"lake-afton-public-observatory": true,
-}
-*/
-
 type Project struct {
 	Title       string
 	Description string
@@ -64,12 +51,14 @@ type HacktoberfestConfiguration struct {
 	RequiredPullRequestCount    int
 	RequiredPullRequestCountEng string
 	TimesToRepeat               string
+	DisplaySponsors             bool
 }
 
 var hacktoberfestOptions = HacktoberfestConfiguration{
 	RequiredPullRequestCount:    2,                      // the number of pull requests required to qualify for this year.
 	RequiredPullRequestCountEng: "two pull requests",    // the required number written out fully
 	TimesToRepeat:               "Repeat 1 more times.", // the value in this sentence should be one less than the required count.
+	DisplaySponsors:             false,
 }
 
 // These specific projects also count
