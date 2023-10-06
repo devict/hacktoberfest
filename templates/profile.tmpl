@@ -145,6 +145,7 @@
       </div>
     </div>
     <!-- Share Info With Sponsors -->
+    {{ if .Config.DisplaySponsors }}
     <div class="bg-gray-50 pr-4 sm:pr-6 lg:pr-8 lg:shrink-0 lg:border-l lg:border-gray-200 xl:pr-0">
       <div class="pl-6 lg:w-80">
         <div class="pt-6 pb-2">
@@ -176,6 +177,7 @@
       </div>
     </div>
   </div>
+  {{ end }}
 </div>
 
 {{/* The contents of these two hidden divs are cloned by JavaScript then
