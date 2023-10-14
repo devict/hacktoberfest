@@ -82,20 +82,18 @@
         Thanks to our sponsors!
       </h2>
       <div
-        class="w-1/2 flex flex-wrap flex-row content-center items-center space-x-4"
+        class="w-1/2 flex flex-col md:flex-row content-center items-center md:space-x-4"
       >
         {{ range $sponsor := .Sponsors }}
-        <span class="py-4 min-h-16 inline-block flex-1 brightness-50">
+        <div class="py-4 min-h-16 flex-1 brightness-50">
           <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}">
             <img
               src="{{ $sponsor.ImagePath }}"
               alt="{{ $sponsor.Name }}"
-              class="max-h-8 min-h-full my-auto inline-block {{
-                $sponsor.ImageClasses
-              }}"
+              class="h-fit w-fit {{ $sponsor.ImageClasses }}"
             />
           </a>
-        </span>
+        </div>
         {{ end }}
       </div>
     </div>
