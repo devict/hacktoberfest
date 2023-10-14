@@ -81,21 +81,21 @@
       <h2 class="text-2xl font-extrabold tracking-tight text-teal-600 py-4">
         Thanks to our sponsors!
       </h2>
-      <ul class="w-1/2 flex">
+      <div
+        class="w-1/2 flex flex-col md:flex-row content-center items-center md:space-x-4"
+      >
         {{ range $sponsor := .Sponsors }}
-        <li class="list-none py-4 h-16">
+        <div class="py-4 min-h-16 flex-1 brightness-50">
           <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}">
             <img
               src="{{ $sponsor.ImagePath }}"
               alt="{{ $sponsor.Name }}"
-              class="h-8 pr-4 {{ $sponsor.ImageClasses }}"
+              class="h-fit w-fit {{ $sponsor.ImageClasses }}"
             />
           </a>
-        </li>
-        {{
-          end
-        }}
-      </ul>
+        </div>
+        {{ end }}
+      </div>
     </div>
   </div>
   <div class="relative mt-1">
