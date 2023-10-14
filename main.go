@@ -25,19 +25,24 @@ type Organization struct {
 // Any project under one of these organizations counts
 var orgs = map[string]Organization{
 	"devict": {
-		Title:       "devICT",
-                ImagePath:    "public/images/logos/devict.svg",
-		Visible:     true,
+		Title:     "devICT",
+		ImagePath: "public/images/logos/devict.svg",
+		Visible:   true,
+	},
+	"grooverlabs": {
+		Title:     "Groover Labs",
+		ImagePath: "public/images/logos/grooverlabs.png",
+		Visible:   true,
 	},
 	"makeict": {
-		Title:       "makeICT",
-                ImagePath:    "public/images/logos/makeict.svg",
-		Visible:     true,
+		Title:     "makeICT",
+		ImagePath: "public/images/logos/makeict.svg",
+		Visible:   true,
 	},
 	"lake-afton-public-observatory": {
-		Title:       "Lake Afton Public Observatory",
-                ImagePath:    "public/images/logos/lake-afton.png",
-		Visible:     true,
+		Title:     "Lake Afton Public Observatory",
+		ImagePath: "public/images/logos/lake-afton.png",
+		Visible:   true,
 	},
 }
 
