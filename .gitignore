@@ -3,3 +3,4 @@ secret.env
 node_modules
 public/css
 wireguard.conf
+.DS_Store

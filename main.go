@@ -46,6 +46,28 @@ var orgs = map[string]Organization{
 	},
 }
 
+type Sponsor struct {
+	Name         string
+	URL          string
+	ImagePath    string
+	ImageClasses string
+}
+
+var sponsors = []Sponsor{
+	{
+		Name:         "Moonbase Labs",
+		URL:          "https://moonbaselabs.com",
+		ImagePath:    "public/images/logos/moonbaselabs.png",
+		ImageClasses: "",
+	},
+	{
+		Name:         "Quilibrium",
+		URL:          "https://quilibrium.com/",
+		ImagePath:    "public/images/logos/quilibrium.svg",
+		ImageClasses: "",
+	},
+}
+
 type Project struct {
 	Title       string
 	Description string
@@ -188,11 +210,13 @@ func logger(h http.Handler) http.Handler {
 func home(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Orgs     map[string]Organization
+		Sponsors []Sponsor
 		Projects map[string]Project
 		Year     int
 		Config   HacktoberfestConfiguration
 	}{
 		Orgs:     orgs,
+		Sponsors: sponsors,
 		Projects: projects,
 		Year:     time.Now().Year(),
 		Config:   hacktoberfestOptions,
