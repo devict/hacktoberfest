@@ -85,7 +85,7 @@
         class="w-1/2 flex flex-col md:flex-row content-center items-center md:space-x-4"
       >
         {{ range $sponsor := .Sponsors }}
-        <div class="py-4 min-h-16 flex-1 brightness-50">
+        <div class="py-4 min-h-16 flex-1">
           <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}">
             <img
               src="{{ $sponsor.ImagePath }}"
