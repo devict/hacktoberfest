@@ -78,22 +78,18 @@
       </div>
     </div>
     <div class="px-8">
-      <h2 class="text-2xl font-extrabold tracking-tight text-teal-600 py-4">
+      <h2 class="mt-8 text-2xl font-extrabold tracking-tight text-teal-600">
         Thanks to our sponsors!
       </h2>
-      <div
-        class="w-1/2 flex flex-col md:flex-row content-center items-center md:space-x-4"
-      >
+      <div class="mt-6 flex flex-wrap gap-8 items-center">
         {{ range $sponsor := .Sponsors }}
-        <div class="py-4 max-h-max min-h-16 flex-1 opacity-60 hover:opacity-70">
-          <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}">
-            <img
-              src="{{ $sponsor.ImagePath }}"
-              alt="{{ $sponsor.Name }}"
-              class="h-fit w-fit {{ $sponsor.ImageClasses }}"
-            />
-          </a>
-        </div>
+        <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}" class="shrink-0 w-2/5 opacity-75 sm:w-48 hover:opacity-100">
+          <img
+            src="{{ $sponsor.ImagePath }}"
+            alt="{{ $sponsor.Name }}"
+            class="max-h-12 w-full object-contain {{ $sponsor.ImageClasses }}"
+          />
+        </a>
         {{ end }}
       </div>
     </div>
