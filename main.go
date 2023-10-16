@@ -57,7 +57,7 @@ var sponsors = []Sponsor{
 	{
 		Name:         "Moonbase Labs",
 		URL:          "https://moonbaselabs.com",
-		ImagePath:    "public/images/logos/moonbaselabs.png",
+		ImagePath:    "public/images/logos/moonbaselabs.svg",
 		ImageClasses: "",
 	},
 	{
