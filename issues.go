@@ -134,7 +134,7 @@ func issueSearch(ctx context.Context, label, token string, ch chan<- Issue) erro
 	// Tell the request to use our context so we can cancel it in-flight if needed
 	req = req.WithContext(ctx)
 
-	q := fmt.Sprintf(`is:open type:issue label:"%s"`, label)
+	q := fmt.Sprintf(`is:open type:issue archived:false label:"%s"`, label)
 	for k, v := range orgs {
 		if v.Visible == true {
 			q += " org:" + k
