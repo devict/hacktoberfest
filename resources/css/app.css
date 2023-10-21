@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.paging_simple_numbers {
+.dataTables_paginate {
   border-radius: theme('borderRadius.DEFAULT');
   overflow: hidden;
   border: 1px solid theme('colors.gray.200');
@@ -10,17 +10,21 @@
   display: inline-flex;
 }
 
-.paging_simple_numbers>span {
+.dataTables_paginate>span {
   display: flex;
 }
 
-.paging_simple_numbers a {
+.dataTables_paginate a {
   display: block;
   font-size: .875rem;
   padding: .5rem .75rem;
   margin: -1px 0 -1px -1px;
   cursor: pointer;
   border: 1px solid theme('colors.gray.200');
+}
+
+.dataTables_paginate a.current {
+  background-color: theme('colors.teal.100');
 }
 
 .dataTables_filter label {
@@ -34,4 +38,8 @@
   border-radius: theme('borderRadius.md');
   box-shadow: theme('boxShadow.sm');
   border: 1px solid theme('colors.gray.300');
+}
+
+.dataTables_wrapper table a {
+  text-decoration: underline;
 }
