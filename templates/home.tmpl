@@ -4,7 +4,7 @@
 
 <header>
   <div class="max-w-screen-xl mx-auto">
-    <div class="text-center md:text-left pt-8 px-4 sm:px-8">
+    <div class="px-4 pt-8 text-center md:text-left sm:px-8">
       <div class="inline-flex flex-col items-center">
         <img class="h-8 -mb-4" src="/public/images/devict.png" alt="devICT" />
         <div class="relative inline-block">
@@ -22,9 +22,9 @@
           </div>
         </div>
       </div>
-      <div class="space-y-5 max-w-4xl">
+      <div class="max-w-4xl space-y-5">
         <!--
-          <div class="rounded-md bg-green-100 p-4">
+          <div class="p-4 bg-green-100 rounded-md">
             <p class="text-base font-medium text-green-800">
               That's a wrap for {{ .Year }}! Thank you all for contributing to devICT's Hacktoberfest.
             </p>
@@ -35,7 +35,7 @@
             This is a blatant attempt to piggyback off the popularity of the
             global
             <a
-              class="underline font-medium text-teal-600 hover:text-teal-700"
+              class="font-medium text-teal-600 underline hover:text-teal-700"
               href="https://hacktoberfest.digitalocean.com"
               >Hacktoberfest event</a
             >
@@ -48,7 +48,7 @@
           <div class="rounded-md shadow">
             <a
               href="/auth/github"
-              class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:border-teal-700 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+              class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-700 md:py-4 md:text-lg md:px-10"
             >
               <svg
                 aria-hidden="true"
@@ -69,7 +69,7 @@
           <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
             <a
               href="#about"
-              class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-teal-600 bg-white hover:text-teal-300 focus:outline-none focus:border-teal-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10"
+              class="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-teal-600 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-teal-300 focus:outline-none focus:border-teal-300 md:py-4 md:text-lg md:px-10"
             >
               Learn more
             </a>
@@ -81,9 +81,9 @@
       <h2 class="mt-8 text-2xl font-extrabold tracking-tight text-teal-600">
         Thanks to our sponsors!
       </h2>
-      <div class="mt-6 flex flex-wrap gap-8 items-center">
+      <div class="flex flex-wrap items-center gap-8 mt-6">
         {{ range $sponsor := .Sponsors }}
-        <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}" class="shrink-0 w-2/5 opacity-75 sm:w-48 hover:opacity-100">
+        <a href="{{ $sponsor.URL }}" title="{{ $sponsor.Name }}" class="w-2/5 opacity-75 shrink-0 sm:w-48 hover:opacity-100">
           <img
             src="{{ $sponsor.ImagePath }}"
             alt="{{ $sponsor.Name }}"
@@ -95,8 +95,8 @@
     </div>
   </div>
   <div class="relative mt-1">
-    <div class="bg-teal-300 absolute inset-y-0 right-0 w-1/2"></div>
-    <div class="relative bg-white max-w-screen-xl mx-auto">
+    <div class="absolute inset-y-0 right-0 w-1/2 bg-teal-300"></div>
+    <div class="relative max-w-screen-xl mx-auto bg-white">
       <img
         class="block"
         src="/public/images/banner.svg"
@@ -107,15 +107,15 @@
 </header>
 
 <section id="about" class="relative bg-teal-200">
-  <div class="bg-white absolute inset-y-0 left-0 w-1/2"></div>
-  <div class="relative max-w-screen-xl mx-auto py-12 bg-teal-200">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="absolute inset-y-0 left-0 w-1/2 bg-white"></div>
+  <div class="relative max-w-screen-xl py-12 mx-auto bg-teal-200">
+    <div class="max-w-4xl px-4 mx-auto sm:px-6 lg:px-8">
       <h2
-        class="text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+        class="text-3xl font-extrabold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl sm:leading-10"
       >
         What's this all about?
       </h2>
-      <div class="mt-6 mx-auto prose prose-lg text-gray-900">
+      <div class="mx-auto mt-6 prose prose-lg text-gray-900">
         <p>
           devICT Hacktoberfest is a great opportunity to learn about open source
           projects being built by developers in your community. You can
@@ -138,16 +138,16 @@
   </div>
 </section>
 
-<section id="get-started" class="relative bg-gray-50 py-12">
-  <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="get-started" class="relative py-12 bg-gray-50">
+  <div class="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
     <div class="lg:text-center">
       <p
-        class="text-base leading-6 text-teal-600 font-extrabold tracking-wide uppercase"
+        class="text-base font-extrabold leading-6 tracking-wide text-teal-600 uppercase"
       >
         Getting Started
       </p>
       <h3
-        class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+        class="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
       >
         How it works
       </h3>
@@ -160,7 +160,7 @@
           <div
             data-sr-scale
             aria-hidden="true"
-            class="relative shrink-0 w-12 h-12 flex items-center justify-center"
+            class="relative flex items-center justify-center w-12 h-12 shrink-0"
           >
             <svg
               width="48"
@@ -175,12 +175,12 @@
               />
             </svg>
             <span
-              class="relative text-2xl font-semibold text-orange-700 leading-none"
+              class="relative text-2xl font-semibold leading-none text-orange-700"
               >1</span
             >
           </div>
           <div class="mt-5">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
               Pick an Issue
             </h3>
             <p class="mt-2 text-base text-gray-500">
@@ -192,7 +192,7 @@
           <div
             data-sr-scale
             aria-hidden="true"
-            class="relative shrink-0 w-12 h-12 flex items-center justify-center"
+            class="relative flex items-center justify-center w-12 h-12 shrink-0"
           >
             <svg
               width="48"
@@ -207,18 +207,18 @@
               />
             </svg>
             <span
-              class="relative text-2xl font-semibold text-orange-700 leading-none"
+              class="relative text-2xl font-semibold leading-none text-orange-700"
               >2</span
             >
           </div>
           <div class="mt-5">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
               Make a Change
             </h3>
             <p class="mt-2 text-base text-gray-500">
               Use Git and GitHub to make your change. See
               <a
-                class="underline font-medium text-teal-700 hover:text-teal-800"
+                class="font-medium text-teal-700 underline hover:text-teal-800"
                 href="https://github.com/KatherineMichel/get-a-jumpstart-on-collaboration-and-code-review-in-gitHub-devict-hacktoberfest/blob/master/README.md"
                 >Kati Michel's tutorial</a
               >, if needed.
@@ -229,7 +229,7 @@
           <div
             data-sr-scale
             aria-hidden="true"
-            class="relative shrink-0 w-12 h-12 flex items-center justify-center"
+            class="relative flex items-center justify-center w-12 h-12 shrink-0"
           >
             <svg
               width="48"
@@ -244,12 +244,12 @@
               />
             </svg>
             <span
-              class="relative text-2xl font-semibold text-orange-700 leading-none"
+              class="relative text-2xl font-semibold leading-none text-orange-700"
               >3</span
             >
           </div>
           <div class="mt-5">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
               Submit a PR
             </h3>
             <p class="mt-2 text-base text-gray-500">
@@ -262,7 +262,7 @@
           <div
             data-sr-scale
             aria-hidden="true"
-            class="relative shrink-0 w-12 h-12 flex items-center justify-center"
+            class="relative flex items-center justify-center w-12 h-12 shrink-0"
           >
             <svg
               width="48"
@@ -277,12 +277,12 @@
               />
             </svg>
             <span
-              class="relative text-2xl font-semibold text-orange-700 leading-none"
+              class="relative text-2xl font-semibold leading-none text-orange-700"
               >4</span
             >
           </div>
           <div class="mt-5">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
               Enjoy Your Swag!
             </h3>
             <p class="mt-2 text-base leading-6 text-gray-500">
@@ -297,7 +297,7 @@
       <a
         data-sr-scale
         href="/auth/github"
-        class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:ring transition duration-150 ease-in-out"
+        class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:ring"
       >
         <svg
           aria-hidden="true"
@@ -319,14 +319,14 @@
 </section>
 
 <div id="projects" class="relative pt-12 pb-12">
-  <div class="absolute bottom-0 w-full h-1/2 lg:h-1/3 bg-gray-100"></div>
-  <div class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="absolute bottom-0 w-full bg-gray-100 h-1/2 lg:h-1/3"></div>
+  <div class="relative max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
     <h2
-      class="text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+      class="text-3xl font-extrabold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl sm:leading-10"
     >
       Qualifying Projects
     </h2>
-    <div class="mt-4 mx-auto text-center prose prose-xl text-gray-500">
+    <div class="mx-auto mt-4 prose prose-xl text-center text-gray-500">
       <p>
         We will count pull requests opened against any of the Wichita developer
         community organizations listed below, which includes the
@@ -343,7 +343,7 @@
         {{ if $org.Visible }}
         <li class="col-span-1 bg-white rounded-lg shadow hover:shadow-md">
           <a
-            class="group block text-center w-full"
+            class="block w-full text-center group"
             href="https://github.com/{{ $orgName }}"
           >
             <div class="p-6">
@@ -355,9 +355,9 @@
             </div>
             <div class="border-t border-gray-200">
               <div class="flex">
-                <div class="w-0 flex-1 flex">
+                <div class="flex flex-1 w-0">
                   <span
-                    class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg group-hover:text-orange-600 focus:outline-none focus:ring-teal focus:border-teal-300 focus:z-10 transition ease-in-out duration-150"
+                    class="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 transition duration-150 ease-in-out border border-transparent rounded-bl-lg group-hover:text-orange-600 focus:outline-none focus:ring-teal focus:border-teal-300 focus:z-10"
                   >
                     <span class="ml-3">View all projects</span>
                     <svg
@@ -389,22 +389,22 @@
   </div>
 </div>
 <div id="repos" class="pb-12 bg-gray-100">
-  <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
     <p class="text-lg text-center">
       We also count pull requests opened against these individual projects from
       Wichita&nbsp;developers
     </p>
-    <ul class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="grid grid-cols-1 gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3">
       {{ range $k, $p := .Projects }}
       {{ if $p.Visible }}
       <li class="col-span-1 bg-white rounded-lg shadow hover:shadow-md">
-        <a href="https://github.com/{{ $k }}" class="group block w-full p-6">
+        <a href="https://github.com/{{ $k }}" class="block w-full p-6 group">
           <div
-            class="text-gray-900 text-sm font-medium group-hover:text-orange-600"
+            class="text-sm font-medium text-gray-900 group-hover:text-orange-600"
           >
             {{ $p.Title }}
           </div>
-          <p class="mt-1 text-gray-500 text-sm">{{ $p.Description }}</p>
+          <p class="mt-1 text-sm text-gray-500">{{ $p.Description }}</p>
         </a>
       </li>
       {{
@@ -414,7 +414,7 @@
         end
       }}
     </ul>
-    <p class="text-center mt-6 text-sm">
+    <p class="mt-6 text-sm text-center">
       Would you like your organization or project to show up on these lists?
       Just let us know! File an issue against this site's repo or maybe make a
       pull request.
@@ -423,20 +423,20 @@
 </div>
 <div id="lets-do-this" class="bg-gray-50">
   <div
-    class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
+    class="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
   >
     <h2
-      class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+      class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
     >
       Ready to dive in?
       <br />
       <span class="text-orange-600">Start contributing today.</span>
     </h2>
-    <div class="mt-8 flex lg:shrink-0 lg:mt-0">
+    <div class="flex mt-8 lg:shrink-0 lg:mt-0">
       <span data-sr-scale class="inline-flex rounded-md shadow">
         <a
           href="/auth/github"
-          class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:ring transition duration-150 ease-in-out"
+          class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:ring"
         >
           <svg
             aria-hidden="true"
