@@ -4,3 +4,6 @@ node_modules
 public/css
 wireguard.conf
 .DS_Store
+modd.conf
+app.exe
+~app.exe
