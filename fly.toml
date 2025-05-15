@@ -1,5 +1,3 @@
-# fly.toml file generated for devict-hacktoberfest on 2022-10-01T16:08:12-05:00
-
 app = "devict-hacktoberfest"
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -18,6 +16,9 @@ processes = []
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
+  auto_stop_machines = true
+  auto_start_machines = true
+
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
